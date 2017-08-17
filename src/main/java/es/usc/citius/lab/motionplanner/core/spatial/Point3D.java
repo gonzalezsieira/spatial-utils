@@ -33,7 +33,9 @@ public class Point3D implements Serializable{
     private static final long serialVersionUID = 20140710L;
     
     public float x, y, z;
-	
+
+	protected static final float PRECISION = 1E+4f;
+
     /**
      * Constructor that initializes a 3D point from its coordinates.
      * 
@@ -77,7 +79,7 @@ public class Point3D implements Serializable{
      * @return 
      */
     public DenseMatrix64F getMatrix() {
-        return new DenseMatrix64F(new double[][]{{x, y, z}});
+        return new DenseMatrix64F(new double[][]{{x}, {y}, {z}});
     }
 
     /************************************************************************
@@ -104,9 +106,9 @@ public class Point3D implements Serializable{
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Math.round(x * 1E+4f);
-        result = prime * result + Math.round(y * 1E+4f);
-        result = prime * result + Math.round(z * 1E+4f);
+        result = prime * result + Math.round(x * PRECISION);
+        result = prime * result + Math.round(y * PRECISION);
+        result = prime * result + Math.round(z * PRECISION);
         return result;
     }
 
@@ -123,16 +125,13 @@ public class Point3D implements Serializable{
             return false;
         }
         Point3D other = (Point3D) obj;
-        if (Math.abs(x - other.x) > 1E-4f) {
+        if (Math.round(x * PRECISION) != Math.round(other.x * PRECISION)) {
             return false;
         }
-        if (Math.abs(y - other.y) > 1E-4f) {
+        if (Math.round(y * PRECISION) != Math.round(other.y * PRECISION)) {
             return false;
         }
-        if (Math.abs(z - other.z) > 1E-4f) {
-            return false;
-        }
-        if (!super.equals(obj)) {
+        if (Math.round(z * PRECISION) != Math.round(other.z * PRECISION)) {
             return false;
         }
         return true;
