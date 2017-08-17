@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<configuration>
+
+        <shape>
+            <type>real</type>
+            <class>es.usc.citius.lab.motionplanner.core.shapes.ShapeSquare2D</class>
+            <parameters>
+                <dimX>2.5</dimX>
+                <dimY>0.495</dimY>
+            </parameters>
+        </shape>
+
+
+        <shape>
+            <type>pessimistic</type>
+            <class>es.usc.citius.lab.motionplanner.core.shapes.ShapeCircle2D</class>
+            <parameters>
+                <radius>2.5485339</radius>
+            </parameters>
+        </shape>
+
+        <shape>
+            <type>optimistic</type>
+            <class>es.usc.citius.lab.motionplanner.core.shapes.ShapeCircle2D</class>
+            <parameters>
+                <radius>0.495</radius>
+            </parameters>
+        </shape>
+
+</configuration>

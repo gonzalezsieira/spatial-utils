@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
  */
 public class Shape2DTest {
     
-    private static final String FILE = "/config/robot-test.xml";
+    private static final String FILE = "/config/test.xml";
     private static final String SHAPE = "shape";
     private XMLConfiguration config;
     private List<HierarchicalConfiguration> shapesConfig;
