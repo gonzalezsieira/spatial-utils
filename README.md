@@ -1,4 +1,4 @@
-# Description
+# Description [![Build Status](https://travis-ci.org/gonzalezsieira/spatial-utils.svg?branch=master)](https://travis-ci.org/gonzalezsieira/spatial-utils)
 
 This is a lightweight library for geometrical operations in 
 3D cartesian coordinate systems written in Java.
