@@ -36,6 +36,8 @@ public class Point2D implements Serializable{
     public float x;
     public float y;
 
+    protected static final float PRECISION = 1E+4f;
+
     /**
      * Default constructor for this class.
      *
@@ -93,8 +95,8 @@ public class Point2D implements Serializable{
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Math.round(x * 1E+4f);
-        result = prime * result + Math.round(y * 1E+4f);
+        result = prime * result + Math.round(x * PRECISION);
+        result = prime * result + Math.round(y * PRECISION);
         return result;
     }
 
@@ -110,10 +112,10 @@ public class Point2D implements Serializable{
             return false;
         }
         Point2D other = (Point2D) obj;
-        if (Math.abs(x - other.x) > 1E-4f) {
+        if (Math.round(x * PRECISION) != Math.round(other.x * PRECISION)) {
             return false;
         }
-        if (Math.abs(y - other.y) > 1E-4f) {
+        if (Math.round(y * PRECISION) != Math.round(other.y * PRECISION)) {
             return false;
         }
         return true;

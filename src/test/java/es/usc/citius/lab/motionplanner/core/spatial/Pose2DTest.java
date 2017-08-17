@@ -16,17 +16,16 @@
 package es.usc.citius.lab.motionplanner.core.spatial;
 
 import es.usc.citius.lab.motionplanner.core.RepeatRule.Repeat;
-import static es.usc.citius.lab.motionplanner.core.spatial.Point2DTest.EXECUTIONS;
-import static es.usc.citius.lab.motionplanner.core.spatial.Point2DTest.random;
 import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import es.usc.citius.lab.motionplanner.core.util.RandomUtils;
 import org.apache.commons.math3.util.FastMath;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.simple.SimpleMatrix;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+
+import static es.usc.citius.lab.motionplanner.core.spatial.Point2D.PRECISION;
 
 /**
  * * Test case for the functionalities of {@link Pose2D}.
@@ -73,8 +72,8 @@ public class Pose2DTest extends Point2DTest{
         Pose2D test2 = new Pose2D(pose1.y, pose1.x, pose1.yaw);
         Pose2D test3 = new Pose2D(pose1.x, pose1.y, pose2.yaw);
         assertEquals("[hashCode] wrong hashCode for equal instances", pose1.hashCode(), test.hashCode());
-        assertTrue("[hashCode] wrong hashCode", (pose1.hashCode() == test2.hashCode()) == (Math.abs(pose1.x - test2.x) < 1E-4 && Math.abs(pose1.y - test2.y) < 1E-4 && Math.abs(MathFunctions.errorBetweenAngles(pose1.yaw, test2.yaw)) < 1E-4));
-        assertTrue("[hashCode] wrong hashCode", (pose1.hashCode() == test3.hashCode()) == (Math.abs(pose1.x - test3.x) < 1E-4 && Math.abs(pose1.y - test3.y) < 1E-4 && Math.abs(MathFunctions.errorBetweenAngles(pose1.yaw, test3.yaw)) < 1E-4));
+        assertTrue("[hashCode] wrong hashCode", (pose1.hashCode() == test2.hashCode()) == (Math.round(pose1.x * PRECISION) == Math.round(test2.x * PRECISION) && Math.round(pose1.y * PRECISION) == Math.round(test2.y * PRECISION) && Math.round(pose1.yaw * PRECISION) == Math.round(test2.yaw * PRECISION)));
+        assertTrue("[hashCode] wrong hashCode", (pose1.hashCode() == test3.hashCode()) == (Math.round(pose1.x * PRECISION) == Math.round(test3.x * PRECISION) && Math.round(pose1.y * PRECISION) == Math.round(test3.y * PRECISION) && Math.round(pose1.yaw * PRECISION) == Math.round(test3.yaw * PRECISION)));
     }
 
     @Override
@@ -83,8 +82,8 @@ public class Pose2DTest extends Point2DTest{
         Pose2D test2 = new Pose2D(pose1.y, pose1.x, pose1.yaw);
         Pose2D test3 = new Pose2D(pose1.x, pose1.y, pose2.yaw);
         assertEquals("[hashCode] wrong equals for equal instances", pose1, test);
-        assertTrue("[equals] wrong result", (pose1.equals(test2)) == (Math.abs(pose1.x - test2.x) < 1E-4 && Math.abs(pose1.y - test2.y) < 1E-4 && Math.abs(MathFunctions.errorBetweenAngles(pose1.yaw, test2.yaw)) < 1E-4));
-        assertTrue("[equals] wrong result", (pose1.equals(test3)) == (Math.abs(pose1.x - test3.x) < 1E-4 && Math.abs(pose1.y - test3.y) < 1E-4 && Math.abs(MathFunctions.errorBetweenAngles(pose1.yaw, test3.yaw)) < 1E-4));
+        assertTrue("[equals] wrong result", (pose1.equals(test2)) == (Math.round(pose1.x * PRECISION) == Math.round(test2.x * PRECISION) && Math.round(pose1.y * PRECISION) == Math.round(test2.y * PRECISION) && Math.round(pose1.yaw * PRECISION) == Math.round(test2.yaw * PRECISION)));
+        assertTrue("[equals] wrong result", (pose1.equals(test3)) == (Math.round(pose1.x * PRECISION) == Math.round(test3.x * PRECISION) && Math.round(pose1.y * PRECISION) == Math.round(test3.y * PRECISION) && Math.round(pose1.yaw * PRECISION) == Math.round(test3.yaw * PRECISION)));
     }
 
     @Override
@@ -123,9 +122,9 @@ public class Pose2DTest extends Point2DTest{
         //rotate operation
         pose1.rotate(angle);
         //checking
-        assertEquals("[rotate] wrong x value", expected.get(0), pose1.x, 1E-3);
-        assertEquals("[rotate] wrong y value", expected.get(1), pose1.y, 1E-3);
-        assertEquals("[static rotate] wrong yaw value", MathFunctions.adjustAngleP((float) expected.get(2)), pose1.yaw, 1E-3);
+        assertEquals("[rotate] wrong x value", expected.get(0), pose1.x, ERR);
+        assertEquals("[rotate] wrong y value", expected.get(1), pose1.y, ERR);
+        assertEquals("[static rotate] wrong yaw value", MathFunctions.adjustAngleP((float) expected.get(2)), pose1.yaw, ERR);
     }
   
     @Override
@@ -163,9 +162,9 @@ public class Pose2DTest extends Point2DTest{
         //rotate operation
         Pose2D result = Pose2D.rotate(pose1, angle);
         //checking
-        assertEquals("[static rotate] wrong x value", expected.get(0), result.x, 1E-3);
-        assertEquals("[static rotate] wrong y value", expected.get(1), result.y, 1E-3);
-        assertEquals("[static rotate] wrong yaw value", MathFunctions.adjustAngleP((float) expected.get(2)), result.yaw, 1E-3);
+        assertEquals("[static rotate] wrong x value", expected.get(0), result.x, ERR);
+        assertEquals("[static rotate] wrong y value", expected.get(1), result.y, ERR);
+        assertEquals("[static rotate] wrong yaw value", MathFunctions.adjustAngleP((float) expected.get(2)), result.yaw, ERR);
     }
     
     /**

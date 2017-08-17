@@ -144,7 +144,7 @@ public class Pose2D extends Point2D implements Serializable{
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + Math.round(yaw * 1E+4f);
+        result = prime * result + Math.round(yaw * PRECISION);
         return result;
     }
 
@@ -155,7 +155,7 @@ public class Pose2D extends Point2D implements Serializable{
         if (getClass() != obj.getClass())
                 return false;
         Pose2D other = (Pose2D) obj;
-        if (Math.abs(MathFunctions.errorBetweenAngles(yaw, other.yaw)) > 1E-4f)
+        if (Math.round(yaw * PRECISION) != Math.round(other.yaw * PRECISION))
                 return false;
         if (!super.equals(obj))
                 return false;

@@ -17,7 +17,6 @@ package es.usc.citius.lab.motionplanner.core.spatial;
 
 import es.usc.citius.lab.motionplanner.core.RepeatRule;
 import es.usc.citius.lab.motionplanner.core.RepeatRule.Repeat;
-import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import java.util.Random;
 
 import es.usc.citius.lab.motionplanner.core.util.RandomUtils;
@@ -28,6 +27,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import static es.usc.citius.lab.motionplanner.core.spatial.Point2D.PRECISION;
 
 /**
  * Test case for the functionalities of {@link Point2D}.
@@ -42,7 +43,7 @@ public class Point2DTest {
     protected float x1, y1, x2, y2;
     protected Point2D point1;
     protected Point2D point2;
-    protected static final float ERR = 1E-6f;
+    protected static final float ERR = 1/PRECISION;
     protected static final float MAX = 50f;
     protected static final int EXECUTIONS = 10000;
     protected static final Random random = new Random();
@@ -107,7 +108,7 @@ public class Point2DTest {
         Point2D test = new Point2D(point1);
         Point2D test2 = new Point2D(point1.y, point1.x);
         assertEquals("[hashCode] wrong hashCode for equal instances", point1.hashCode(), test.hashCode());
-        assertTrue("[hashCode] wrong hashCode", (point1.hashCode() == test2.hashCode()) == (Math.abs(point1.x - test2.x) < 1E-4 && Math.abs(point1.y - test2.y) < 1E-4));
+        assertTrue("[hashCode] wrong hashCode", (point1.hashCode() == test2.hashCode()) == (Math.round(point1.x * PRECISION) == Math.round(test2.x * PRECISION) && Math.round(point1.y * PRECISION) == Math.round(test2.y * PRECISION)));
     }
     
     /**
@@ -120,7 +121,7 @@ public class Point2DTest {
         Point2D test = new Point2D(point1);
         Point2D test2 = new Point2D(point1.y, point1.x);
         assertEquals("[equals] wrong equals result for equal instances", point1, test);
-        assertTrue("[equals] wrong equals result", point1.equals(test2) == (Math.abs(point1.x - test2.x) < 1E-4 && Math.abs(point1.y - test2.y) < 1E-4));
+        assertTrue("[equals] wrong equals result", point1.equals(test2) == (Math.round(point1.x * PRECISION) == Math.round(test2.x * PRECISION) && Math.round(point1.y * PRECISION) == Math.round(test2.y * PRECISION)));
     }
     
     /**
@@ -243,8 +244,8 @@ public class Point2DTest {
         //rotate operation
         point1.rotate(angle);
         //checking
-        assertEquals("[rotate] wrong x value", expected.get(0), point1.x, 1E-3);
-        assertEquals("[rotate] wrong y value", expected.get(1), point1.y, 1E-3);
+        assertEquals("[rotate] wrong x value", expected.get(0), point1.x, ERR);
+        assertEquals("[rotate] wrong y value", expected.get(1), point1.y, ERR);
     }
     
     /**
@@ -367,7 +368,7 @@ public class Point2DTest {
         //rotate operation
         Point2D result = Point2D.rotate(point1, angle);
         //checking
-        assertEquals("[rotate] wrong x value", expected.get(0), result.x, 1E-3);
-        assertEquals("[rotate] wrong y value", expected.get(1), result.y, 1E-3);
+        assertEquals("[rotate] wrong x value", expected.get(0), result.x, ERR);
+        assertEquals("[rotate] wrong y value", expected.get(1), result.y, ERR);
     }
 }
