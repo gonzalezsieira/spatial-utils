@@ -16,6 +16,7 @@
 package es.usc.citius.lab.motionplanner.core.spatial;
 
 import java.io.Serializable;
+import java.util.Vector;
 
 import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import org.apache.commons.math3.util.FastMath;
@@ -165,6 +166,73 @@ public class Point3D implements Serializable{
      */
     public float distance(Point3D point) {
         return (float) FastMath.sqrt(FastMath.pow(point.x - this.x, 2) + FastMath.pow(point.y - this.y, 2) + FastMath.pow(point.z - this.z, 2));
+    }
+
+    /**
+     * Calculates the projection of this point over a line segment.
+     *
+     * @param S1 first point of the segment
+     * @param S2 second point of the segment
+     * @return closest point over the segment.
+     */
+    public Point3D projectionToSegment(Point3D S1, Point3D S2) {
+
+        //S2 - S1
+        Vector3D v = new Vector3D(S1, S2);
+        //P - S1
+        Vector3D w = new Vector3D(S1, this);
+
+        //W·V
+        float c1 = w.dotProduct(v);
+        //S1 is the closest point
+        if (c1 <= 0)
+            return S1;
+
+        //V·V
+        float c2 = v.dotProduct(v);
+        //S2 is the closest point
+        if (c2 <= c1)
+            return S2;
+
+        //if in the middle of the segment, obtain distance to projection
+        float b = c1 / c2;
+        //projection
+        return new Point3D(S1.x + b * v.x, S1.y + b * v.y, S1.z + b * v.z);
+
+    }
+
+    /**
+     * Calculates the distance between the point and a line segment.
+     *
+     * @param S1 first point of the segment
+     * @param S2 second point of the segment
+     * @return shortest distance between the point and the segment
+     */
+    public float distanceToSegment(Point3D S1, Point3D S2){
+
+        //S2 - S1
+        Vector3D v = new Vector3D(S1, S2);
+        //P - S1
+        Vector3D w = new Vector3D(S1, this);
+
+        //W·V
+        float c1 = w.dotProduct(v);
+        //S1 is the closest point
+        if(c1 <= 0)
+            return this.distance(S1);
+
+        //V·V
+        float c2 = v.dotProduct(v);
+        //S2 is the closest point
+        if(c2 <= c1)
+            return this.distance(S2);
+
+        //if in the middle of the segment, obtain distance to projection
+        float b = c1 / c2;
+        //projection
+        Point3D B = new Point3D(S1.x + b * v.x, S1.y + b * v.y, S1.z + b * v.z);
+        return this.distance(B);
+
     }
 
     /**
