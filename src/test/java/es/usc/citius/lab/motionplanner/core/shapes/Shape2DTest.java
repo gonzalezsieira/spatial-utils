@@ -59,7 +59,7 @@ public class Shape2DTest {
     public void test_class() {
         for(HierarchicalConfiguration current : shapesConfig){
             //instantiate class
-            Shape2D shape = Shape2D.create(current);
+            Shape shape = Shape.create(current);
             //compare expected and current class names
             String className = shape.getClass().getCanonicalName();
             String expectedName = current.getString("class");
