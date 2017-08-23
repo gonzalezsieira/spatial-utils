@@ -42,7 +42,6 @@ public final class ShapeSquare2D extends Shape2D {
     
     private Map<Integer, Point2D> borderPositionsByAngle; //stores the points of the border of the shape, by angle, in degree precision
     private Map<Integer, Float> distancesByAngle; //stores the distances to the border of the shape, by angle, in degegree precision
-    private Point2D[] corners; //stores the corners of the shape
     private float halfDimX;
     private float halfDimY;
     private float angleFront; //angle of the front-left corner
@@ -117,13 +116,6 @@ public final class ShapeSquare2D extends Shape2D {
             //add distance to the map, with degree resolution
             distancesByAngle.put(i, intersection.distance(Point2D.ZERO));
         }
-        //obtain the corners of the shape
-        this.corners = new Point2D[]{
-                new Point2D(halfDimX, -halfDimY),
-                new Point2D(halfDimX, halfDimY),
-                new Point2D(-halfDimX, halfDimY),
-                new Point2D(-halfDimX, -halfDimY)
-        };
     }
 
     /**
