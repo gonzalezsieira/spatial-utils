@@ -26,6 +26,9 @@ import java.io.Serializable;
 public class Vector3D extends Point3D implements Serializable{
 
     private static final long serialVersionUID = 20140710L;
+    public static final Vector3D X = new Vector3D(1f, 0f, 0f);
+    public static final Vector3D Y = new Vector3D(0f, 1f, 0f);
+    public static final Vector3D Z = new Vector3D(0f, 0f, 1f);
     
     /**
      * Creates a vector [x, y, z] given its three elements.
