@@ -18,11 +18,6 @@ package es.usc.citius.lab.motionplanner.core.shapes;
 import es.usc.citius.lab.motionplanner.core.spatial.Point2D;
 import es.usc.citius.lab.motionplanner.core.spatial.Pose2D;
 import es.usc.citius.lab.motionplanner.core.spatial.Vector2D;
-import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
 
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.math3.util.FastMath;
@@ -86,8 +81,8 @@ public final class ShapeCircle2D extends Shape2D {
     public Point2D[] vertexAt(Pose2D pose) {
         return new Point2D[]{
                 new Point2D(pose.getX() + radius, pose.getY()),
-                new Point2D(pose.getX(), pose.getY() + radius),
                 new Point2D(pose.getX() - radius, pose.getY()),
+                new Point2D(pose.getX(), pose.getY() + radius),
                 new Point2D(pose.getX(), pose.getY() - radius)
         };
     }
@@ -110,6 +105,9 @@ public final class ShapeCircle2D extends Shape2D {
 
     @Override
     public Vector2D[] axisAt(Pose2D pose) {
-        return new Vector2D[0];
+        return new Vector2D[]{
+            Vector2D.X,
+            Vector2D.Y
+        };
     }
 }
