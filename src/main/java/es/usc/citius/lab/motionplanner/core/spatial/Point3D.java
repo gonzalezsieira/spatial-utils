@@ -16,7 +16,6 @@
 package es.usc.citius.lab.motionplanner.core.spatial;
 
 import java.io.Serializable;
-import java.util.Vector;
 
 import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import org.apache.commons.math3.util.FastMath;
@@ -139,23 +138,33 @@ public class Point3D implements Serializable{
     }
 
     /**
-     * Measures the angle in XY plane (yaw) between two 3D points.
+     * Measures the angle around Z axis (yaw) between two 3D points.
      *
      * @param point
      * @return yaw
      */
-    public float angleXYPlane(Point3D point){
+    public float yawTo(Point3D point){
         return MathFunctions.adjustAngleP((float) FastMath.atan2(point.y - y, point.x - x));
     }
 
     /**
-     * Measures the angle in XZ plane (pitch) between two 3D points.
+     * Measures the angle around Y (pitch) between two 3D points.
      *
      * @param point
      * @return pitch
      */
-    public float angleXZPlane(Point3D point){
+    public float pitchTo(Point3D point){
         return MathFunctions.adjustAngleP((float) FastMath.atan2(point.z - z, point.x - x));
+    }
+
+    /**
+     * Measures the angle around X (roll) between two 3D points.
+     *
+     * @param point
+     * @return roll
+     */
+    public float rollTo(Point3D point){
+        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.y - y, point.z - z));
     }
 
     /**
