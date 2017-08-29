@@ -18,6 +18,7 @@ package es.usc.citius.lab.motionplanner.core.spatial;
 import java.io.Serializable;
 
 import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
+import es.usc.citius.lab.motionplanner.core.util.Pair;
 import org.apache.commons.math3.util.FastMath;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.simple.SimpleMatrix;
@@ -154,7 +155,23 @@ public class Point3D implements Serializable{
      * @return pitch
      */
     public float pitchTo(Point3D point){
-        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.z - z, point.x - x));
+        float dx = point.x - x;
+        float dy = point.y - y;
+        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.z - z, FastMath.sqrt(dx * dx + dy * dy)));
+    }
+
+    /**
+     * Retrieves the angles [yaw, pitch] to look at a given point from the current one.
+     * @return
+     */
+    public Pair<Float, Float> angleTo(Point3D point){
+        float dx = point.x - x;
+        float dy = point.y - y;
+        float dz = point.z - z;
+        return new Pair<Float, Float>(
+                MathFunctions.adjustAngleP((float) FastMath.atan2(dy, dx)),
+                MathFunctions.adjustAngleP((float) FastMath.atan2(dz, FastMath.sqrt(dx * dx + dy * dy)))
+        );
     }
 
     /**
