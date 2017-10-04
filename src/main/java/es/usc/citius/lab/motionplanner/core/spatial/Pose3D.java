@@ -15,13 +15,18 @@
  */
 package es.usc.citius.lab.motionplanner.core.spatial;
 
+import java.io.Serializable;
+
 /**
  * Class defining a pose in 3D, where the location (x, y z) and heading (roll, pitch, yaw)
  * of an object is given.
  *
  * @author Adrián González Sieira <<a href="mailto:adrian.gonzalez@usc.es">adrian.gonzalez@usc.es</a>>
  */
-public class Pose3D extends Point3D{
+public class Pose3D extends Point3D implements Serializable{
+
+    public static final Pose3D ZERO = new Pose3D(Point3D.ZERO, 0,0, 0);
+    private static final long serialVersionUID = 20171003L;
 
     public float yaw, pitch, roll;
 
