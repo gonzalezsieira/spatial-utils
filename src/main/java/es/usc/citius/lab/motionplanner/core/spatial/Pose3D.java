@@ -15,6 +15,8 @@
  */
 package es.usc.citius.lab.motionplanner.core.spatial;
 
+import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
+
 import java.io.Serializable;
 
 /**
@@ -70,6 +72,44 @@ public class Pose3D extends Point3D implements Serializable{
     public Pose3D(Pose3D other) {
         this(other.x, other.y, other.z, other.yaw, other.pitch, other.roll);
     }
+
+    /************************************************************************
+     * 					GEOMETRIC OPERATION METHODS
+     ************************************************************************/
+
+    /**
+     * Obtains the symmetric state respect to the X axis:
+     * (x, -y, z, reflectedYawX, pitch, reflectedRoll)
+     *
+     * @return reflected {@link State2D}, respect to the X axis
+     */
+    public Pose3D symmetricAxisXZ(){
+        return new Pose3D(x, -y, z, MathFunctions.adjustAngleP(-this.yaw), pitch, MathFunctions.adjustAngleP(-this.roll));
+    }
+
+    /**
+     * Obtains the symmetric state respect to the Y axis:
+     * (-x, y, z, reflectedYawY, pitch, roll)
+     *
+     * @return reflected {@link State2D}, respect to the Y axis
+     */
+    public Pose3D symmetricAxisYZ(){
+        return new Pose3D(-x, y, z, MathFunctions.adjustAngleP(MathFunctions.PI - yaw), pitch, roll);
+    }
+
+    /**
+     * Obtains the symmetric state respect to the Y axis:
+     * (x, y, -z, yaw, reflectedPitch, reflectedRoll)
+     *
+     * @return reflected {@link State2D}, respect to the Y axis
+     */
+    public Pose3D symmetricAxisXY(){
+        return new Pose3D(x, y, -z, yaw, -pitch, MathFunctions.adjustAngleP(-this.roll));
+    }
+
+    /************************************************************************
+     *                      	GETTERS
+     ************************************************************************/
 
     public float getYaw() {
         return yaw;
