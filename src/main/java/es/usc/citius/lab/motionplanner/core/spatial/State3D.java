@@ -4,7 +4,6 @@ import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.simple.SimpleMatrix;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.Serializable;
 
 /**
