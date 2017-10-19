@@ -261,35 +261,6 @@ public class Point3D implements Serializable{
 
     }
 
-    /**
-     * **********************************************************************
-     * GEOMETRIC OPERATION METHODS
-     * **********************************************************************
-     */
-    /**
-     * Rotates this instance of {@link Point3D} according to the
-     * specified angles.
-     * 
-     * @param yaw rotation in the XY plane
-     * @param pitch rotation in the XZ plane
-     * @param roll rotation in the YZ plane
-     */
-    public void rotate(float yaw, float pitch, float roll){
-        float[] rotated = rotateXYZCoordinates(x, y, z, yaw, pitch, roll);
-        x = rotated[0];
-        y = rotated[1];
-        z = rotated[2];
-    }
-
-    /**
-     * Adds a point to the current one.
-     * @param point
-     */
-    public void add(Point3D point){
-        x += point.x;
-        y += point.y;
-        z += point.z;
-    }
     
     /**
      * **********************************************************************
@@ -300,26 +271,24 @@ public class Point3D implements Serializable{
      * Performs the sum of the (x, y, z) coordinates of two instances of
      * {@link Point3D}.
      *
-     * @param point original point
      * @param move transform point
      * @return new {@link Point3D} with coordinates (point.x + move.x, point.y + move.y, point.z + move.z)
      */
-    public static Point3D add(Point3D point, Point3D move) {
-        return new Point3D(point.x + move.x, point.y + move.y, point.z + move.z);
+    public Point3D add(Point3D move) {
+        return new Point3D(this.x + move.x, this.y + move.y, this.z + move.z);
     }
 
     /**
      * Rotates this instance of {@link Point3D} according to the
      * specified angles, returning a new instance.
-     * 
-     * @param point source instance of {@link Point3D} 
+     *
      * @param yaw rotation in the XY plane
      * @param pitch rotation in the XZ plane
      * @param roll rotation in the YZ plane
      * @return rotated instance of {@link Point3D}
      */
-    public static Point3D rotate(Point3D point, float yaw, float pitch, float roll){
-        float[] rotated = rotateXYZCoordinates(point.x, point.y, point.z, yaw, pitch, roll);
+    public Point3D rotate(float yaw, float pitch, float roll){
+        float[] rotated = rotateXYZCoordinates(this.x, this.y, this.z, yaw, pitch, roll);
         return new Point3D(rotated[0], rotated[1], rotated[2]);
     }
     
@@ -360,5 +329,61 @@ public class Point3D implements Serializable{
                 + z * (cospitch * cosroll))
         };
     }
-	
+
+    /**
+     * Sum operation (in 3D) of two instances of Point3D. The result is applied in this same instance.
+     *
+     * @param move addition amount
+     */
+    public void staticAdd(Point3D move) {
+        this.x += move.x;
+        this.y += move.y;
+        this.z += move.z;
+    }
+
+    /**
+     * Sum operation (in 2D) of two instances of Point3D and Point2D. The result is applied in this same instance.
+     *
+     * @param move addition amount
+     */
+    public void staticAdd(Point2D move) {
+        this.x += move.x;
+        this.y += move.y;
+    }
+
+    /**
+     * Subtraction operation (in 3D) of two instances of Point3D. The result is applied in this same instance.
+     *
+     * @param move subtraction amount
+     */
+    public void staticSubtract(Point3D move) {
+        this.x -= move.x;
+        this.y -= move.y;
+        this.z -= move.z;
+    }
+
+    /**
+     * Subtraction operation (in 2D) of two instances of Point3D and Point2D. The result is applied in this same instance.
+     *
+     * @param move subtraction amount
+     */
+    public void staticSubtract(Point2D move) {
+        this.x -= move.x;
+        this.y -= move.y;
+    }
+
+    /**
+     * Rotates the Point3D instance applying the result in the same instance.
+     *
+     * @param yaw rotation around Z
+     * @param pitch rotation around Y
+     * @param roll rotation around X
+     */
+    public void staticRotate(float yaw, float pitch, float roll){
+        float[] rotated = rotateXYZCoordinates(this.x, this.y, this.z, yaw, pitch, roll);
+        this.x = rotated[0];
+        this.y = rotated[1];
+        this.z = rotated[2];
+    }
+
 }

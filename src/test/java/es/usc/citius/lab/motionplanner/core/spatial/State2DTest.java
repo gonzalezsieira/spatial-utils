@@ -147,7 +147,7 @@ public class State2DTest extends Pose2DTest{
     @Repeat( times = EXECUTIONS)
     @Override
     public void test_symmetricAxisX(){
-        State2D result = state1.symmetricAxisX();
+        State2D result = state1.symmetricAxisXZ();
         assertEquals("[symmetricAxisX] wrong x value", x1, result.x, ERR);
         assertEquals("[symmetricAxisX] wrong y value", -y1, result.y, ERR);
         assertEquals("[symmetricAxisX] wrong yaw value", -yaw1, result.yaw, ERR);
@@ -164,7 +164,7 @@ public class State2DTest extends Pose2DTest{
     @Repeat( times = EXECUTIONS)
     @Override
     public void test_symmetricAxisY(){
-        State2D result = state1.symmetricAxisY();
+        State2D result = state1.symmetricAxisYZ();
         assertEquals("[symmetricAxisX] wrong x value", -x1, result.x, ERR);
         assertEquals("[symmetricAxisX] wrong y value", y1, result.y, ERR);
         assertEquals("[symmetricAxisX] wrong yaw value", MathFunctions.adjustAngleP(MathFunctions.PI - yaw1), result.yaw, ERR);
@@ -179,7 +179,7 @@ public class State2DTest extends Pose2DTest{
         float x = x1 + x2;
         float y = y1 + y2;
         //static sum operation
-        State2D result = State2D.add(state1, point2);
+        State2D result = state1.add(point2);
         //checking
         assertEquals("[static add] wrong x value", x, result.x, ERR);
         assertEquals("[static add] wrong x value", y, result.y, ERR);
@@ -195,7 +195,7 @@ public class State2DTest extends Pose2DTest{
         float x = x1 - x2;
         float y = y1 - y2;
         //static subtract operation
-        State2D result = State2D.subtract(state1, point2);
+        State2D result = state1.subtract(point2);
         //checking
         assertEquals("[static subtract] wrong x value", x, result.x, ERR);
         assertEquals("[static subtract] wrong y value", y, result.y, ERR);
@@ -212,7 +212,7 @@ public class State2DTest extends Pose2DTest{
         //calculate correct values
         SimpleMatrix expected = new SimpleMatrix(new double[][]{{FastMath.cos(angle), -FastMath.sin(angle), 0}, {FastMath.sin(angle), FastMath.cos(angle), 0}, {0, 0, (angle + yaw1)/yaw1}}).mult(new SimpleMatrix(pose1.getMatrix()));
         //rotate operation
-        State2D result = State2D.rotate(state1, angle);
+        State2D result = state1.rotate(angle, 0f, 0f);
         //checking
         assertEquals("[static rotate] wrong x value", expected.get(0), result.x, 1E-3);
         assertEquals("[static rotate] wrong y value", expected.get(1), result.y, 1E-3);

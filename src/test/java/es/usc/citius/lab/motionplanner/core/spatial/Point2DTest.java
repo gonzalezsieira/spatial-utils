@@ -209,7 +209,7 @@ public class Point2DTest {
         float x = x1 + x2;
         float y = y1 + y2;
         //sum operation
-        point1.add(point2);
+        point1.staticAdd(point2);
         //checking
         assertEquals("[add] wrong x value", x, point1.x, ERR);
         assertEquals("[add] wrong x value", y, point1.y, ERR);
@@ -225,7 +225,7 @@ public class Point2DTest {
         float x = x1 - x2;
         float y = y1 - y2;
         //subtract operation
-        point1.subtract(point2);
+        point1.staticSubtract(point2);
         //checking
         assertEquals("[subtract] wrong x value", x, point1.x, ERR);
         assertEquals("[subtract] wrong y value", y, point1.y, ERR);
@@ -242,7 +242,7 @@ public class Point2DTest {
         //calculate correct values
         SimpleMatrix expected = new SimpleMatrix(new double[][]{{FastMath.cos(angle), -FastMath.sin(angle)}, {FastMath.sin(angle), FastMath.cos(angle)}}).mult(new SimpleMatrix(point1.getMatrix()));
         //rotate operation
-        point1.rotate(angle);
+        point1.staticRotate(angle);
         //checking
         assertEquals("[rotate] wrong x value", expected.get(0), point1.x, ERR);
         assertEquals("[rotate] wrong y value", expected.get(1), point1.y, ERR);

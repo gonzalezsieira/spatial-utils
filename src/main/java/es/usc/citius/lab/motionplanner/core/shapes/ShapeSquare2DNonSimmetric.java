@@ -131,10 +131,10 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
 
         //now the points are rotated to make the sides of the robot match with the heading
         //in global coordinates
-        p1.rotate(pose.getYaw());
-        p2.rotate(pose.getYaw());
-        p1.add(pose);
-        p2.add(pose);
+        p1.staticRotate(pose.getYaw());
+        p2.staticRotate(pose.getYaw());
+        p1.staticAdd(pose);
+        p2.staticAdd(pose);
         //now the straight line is built
         return new Pair<Point2D, Point2D>(p1, p2);
     }

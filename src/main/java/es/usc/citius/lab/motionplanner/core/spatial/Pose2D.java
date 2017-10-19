@@ -102,19 +102,6 @@ public class Pose2D extends Point2D implements Serializable{
     }
 
     /**
-     * Applies a rotation over the coordinates and heading of this point.
-     *
-     * @param angle in interval (-PI, PI]
-     */
-    @Override
-    public void rotate(float angle) {
-        float[] rotated = rotateXYCoordinates(x, y, angle);
-        x = rotated[0];
-        y = rotated[1];
-        yaw = MathFunctions.adjustAngleP(yaw + angle);
-    }
-
-    /**
      * Obtains the symmetric pose respect to the X axis:
      * (x, -y, reflectedYawX) 
      * 
@@ -171,41 +158,46 @@ public class Pose2D extends Point2D implements Serializable{
     /**
      * Performs the sum of the (x, y) coordinates of a {@link Pose2D}
      * and a {@link Point2D}. 
-     * 
-     * @param pose original pose
+     *
      * @param move transform point
-     * @return new {@link Pose2D} with coordinates (pose.x + move.x, pose.y + move.y, pose.yaw)
+     * @return new {@link Pose2D} with coordinates (this.x + move.x, this.y + move.y, this.yaw)
      */
-    public static Pose2D add(Pose2D pose, Point2D move){
-        return new Pose2D(pose.x + move.x, pose.y + move.y, pose.yaw);
+    public static Pose2D add(Pose2D base, Point2D move){
+        return new Pose2D(base.x + move.x, base.y + move.y, base.yaw);
     }
 
     /**
      * Performs the subtract of the (x, y) coordinates of a {@link Pose2D}
      * and a {@link Point2D}. 
-     * 
-     * @param pose original pose
+     *
      * @param move transform point
-     * @return new {@link Pose2D} with coordinates (pose.x - move.x, pose.y - move.y, pose.yaw)
+     * @return new {@link Pose2D} with coordinates (this.x - move.x, this.y - move.y, this.yaw)
      */
-    public static Pose2D subtract(Pose2D pose, Point2D move){
-        return new Pose2D(pose.x - move.x, pose.y - move.y, pose.yaw);
+    public static Pose2D subtract(Pose2D base, Point2D move){
+        return new Pose2D(base.x - move.x, base.y - move.y, base.yaw);
     }
 
     /**
      * Rotates a {@link Pose2D} instance a given angle. The rotated
      * instance has the X and Y coordinates rotated and also the heading.
-     * 
-     * @param pose original instance of {@link Pose2D}
+     *
      * @param angle rotation parameter
      * @return rotated {@link Pose2D}
      */
-    public static Pose2D rotate(Pose2D pose, float angle){
+    public static Pose2D rotate(Pose2D base, float angle){
         //rotated (x, y)
-        float[] rotatedXY = Point2D.rotateXYCoordinates(pose.x, pose.y, angle);
+        float[] rotatedXY = Point2D.rotateXYCoordinates(base.x, base.y, angle);
         //rotated heading
-        float newAngle = MathFunctions.adjustAngleP(pose.yaw + angle);
+        float newAngle = MathFunctions.adjustAngleP(base.yaw + angle);
         //new Pose2D
         return new Pose2D(rotatedXY[0], rotatedXY[1], newAngle);
     }
+
+    @Override
+    public void staticRotate(float angle) {
+        super.staticRotate(angle);
+        //rotated heading
+        this.yaw = MathFunctions.adjustAngleP(this.yaw + angle);
+    }
+
 }

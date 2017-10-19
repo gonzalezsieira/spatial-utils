@@ -158,38 +158,6 @@ public class Point2D implements Serializable{
     }
 
     /**
-     * Adds the coordinates of this point and other instance of {@link Point2D}.
-     *
-     * @param point other instance of {@link Point2D}
-     */
-    public void add(Point2D point) {
-        x += point.x;
-        y += point.y;
-    }
-
-    /**
-     * Subtracts to the coordinates of this point the coordinates of other
-     * {@link Point2D}.
-     *
-     * @param point other instance of {@link Point2D}
-     */
-    public void subtract(Point2D point) {
-        x -= point.x;
-        y -= point.y;
-    }
-
-    /**
-     * Applies a rotation over the coordinates of this point.
-     *
-     * @param angle in interval (-PI, PI]
-     */
-    public void rotate(float angle) {
-        float[] rotated = rotateXYCoordinates(x, y, angle);
-        x = rotated[0];
-        y = rotated[1];
-    }
-
-    /**
      * Calculates the projection of the current instance over the line defined
      * by the two points r1 and r2.
      *
@@ -302,4 +270,56 @@ public class Point2D implements Serializable{
             x * sin + y * cos
         };
     }
+
+    /**
+     * Rotates the Point2D instance applying the result in the same instance.
+     *
+     * @param angle rotation angle
+     */
+    public void staticRotate(float angle){
+        float[] rotation = rotateXYCoordinates(x, y, angle);
+        this.x = rotation[0];
+        this.y = rotation[1];
+    }
+
+    /**
+     * Sum operation (in 2D) of two instances of Point2D and Point3D. The result is applied in this same instance.
+     *
+     * @param move addition amount
+     */
+    public void staticAdd(Point3D move) {
+        this.x += move.x;
+        this.y += move.y;
+    }
+
+    /**
+     * Addition operation (in 2D) of two instances of Point2D. The result is applied in this same instance.
+     *
+     * @param move addition amount
+     */
+    public void staticAdd(Point2D move) {
+        this.x += move.x;
+        this.y += move.y;
+    }
+
+    /**
+     * Subtraction operation (in 2D) of two instances of Point2D and Point3D. The result is applied in this same instance.
+     *
+     * @param move subtraction amount
+     */
+    public void staticSubtract(Point3D move) {
+        this.x -= move.x;
+        this.y -= move.y;
+    }
+
+    /**
+     * Subtraction operation (in 2D) of two instances of Point2D and Point3D. The result is applied in this same instance.
+     *
+     * @param move subtraction amount
+     */
+    public void staticSubtract(Point2D move) {
+        this.x -= move.x;
+        this.y -= move.y;
+    }
+
 }

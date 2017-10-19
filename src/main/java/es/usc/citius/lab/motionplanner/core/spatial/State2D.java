@@ -28,7 +28,7 @@ import org.ejml.simple.SimpleMatrix;
  *
  * @author Adrián González Sieira <<a href="mailto:adrian.gonzalez@usc.es">adrian.gonzalez@usc.es</a>>
  */
-public class State2D extends Pose2D implements Serializable {
+public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
 	
     public static final State2D ZERO = new State2D(Pose2D.ZERO, 0,0, 0);
     private static final long serialVersionUID = 20140710L;
@@ -186,7 +186,7 @@ public class State2D extends Pose2D implements Serializable {
      * @return reflected {@link State2D}, respect to the X axis
      */
     @Override
-    public State2D symmetricAxisX(){
+    public State2D symmetricAxisXZ(){
         float angle = MathFunctions.adjustAngleP(-yaw);
         return new State2D(x, -y, angle, vx, -vy, -w);
     }
@@ -198,9 +198,14 @@ public class State2D extends Pose2D implements Serializable {
      * @return reflected {@link State2D}, respect to the Y axis
      */
     @Override
-    public State2D symmetricAxisY(){
+    public State2D symmetricAxisYZ(){
         float angle = MathFunctions.adjustAngleP(MathFunctions.PI - yaw);
         return new State2D(-x, y, angle, vx, -vy, -w);
+    }
+
+    @Override
+    public State2D symmetricAxisXY() {
+        return new State2D(this);
     }
 
     /************************************************************************
@@ -210,41 +215,51 @@ public class State2D extends Pose2D implements Serializable {
     /**
      * Performs the sum of the (x, y) coordinates of two instances
      * of {@link Point2D}. 
-     * 
-     * @param state original state
+     *
      * @param move adding point
-     * @return new {@link State2D} with coordinates (state.x + move.x, state.y + move.y, state.yaw, state.vx, state.vy, state.w)
+     * @return new {@link State2D} with coordinates (this.x + move.x, this.y + move.y, this.yaw, this.vx, this.vy, this.w)
      */
-    public static State2D add(State2D state, Point2D move){
-        return new State2D(state.x + move.x, state.y + move.y, state.yaw, state.vx, state.vy, state.w);
+    @Override
+    public State2D add(Point3D move){
+        return new State2D(this.x + move.x, this.y + move.y, this.yaw, this.vx, this.vy, this.w);
+    }
+
+    @Override
+    public State2D add(Point2D move) {
+        return new State2D(this.x + move.x, this.y + move.y, this.yaw, this.vx, this.vy, this.w);
     }
 
     /**
      * Performs the subtract of the (x, y) coordinates of a {@link State2D} and
      * a {@link Point2D}.
-     * 
-     * @param state original state
+     *
      * @param move subtracting point
-     * @return new {@link State2D} with coordinates (state.x - move.x, state.y - move.y, state.yaw, state.vx, state.vy, state.w)
+     * @return new {@link State2D} with coordinates (this.x - move.x, this.y - move.y, this.yaw, this.vx, this.vy, this.w)
      */
-    public static State2D subtract(State2D state, Point2D move){
-        return new State2D(state.x - move.x, state.y - move.y, state.yaw, state.vx, state.vy, state.w);
+    @Override
+    public State2D subtract(Point3D move){
+        return new State2D(this.x - move.x, this.y - move.y, this.yaw, this.vx, this.vy, this.w);
     }
-    
+
+    @Override
+    public State2D subtract(Point2D move) {
+        return new State2D(this.x - move.x, this.y - move.y, this.yaw, this.vx, this.vy, this.w);
+    }
+
     /**
     * Rotates the an instance of {@link Point2D} and obtains the 
     * point rotated by the angle specified.
-    * 
-    * @param state current (x, y) point
-    * @param angle rotation angle
+    *
+    * @param yaw rotation angle
     * @return new {@link Point2D} after rotation
     */
-    public static State2D rotate(State2D state, float angle){
+    @Override
+    public State2D rotate(float yaw, float pitch, float roll){
         //rotated (x, y)
-        float[] rotatedXY = Point2D.rotateXYCoordinates(state.x, state.y, angle);
+        float[] rotatedXY = Point2D.rotateXYCoordinates(this.x, this.y, yaw);
         //rotated heading
-        float newAngle = MathFunctions.adjustAngleP(state.yaw + angle);
+        float newAngle = MathFunctions.adjustAngleP(this.yaw + yaw);
         //new State2D
-        return new State2D(rotatedXY[0], rotatedXY[1], newAngle, state.vx, state.vy, state.w);
+        return new State2D(rotatedXY[0], rotatedXY[1], newAngle, this.vx, this.vy, this.w);
     }
 }

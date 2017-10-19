@@ -88,7 +88,25 @@ public class Point3DTest{
         float y = y1 + y2;
         float z = z1 + z2;
         //sum operation
-        point1.add(point2);
+        point1.staticAdd(point2);
+        //checking
+        assertEquals("[add] wrong x value", x, point1.x, ERR);
+        assertEquals("[add] wrong x value", y, point1.y, ERR);
+        assertEquals("[add] wrong z value", z, point1.z, ERR);
+    }
+
+    /**
+     * Checks if the adding operation is calculated properly.
+     */
+    @Test
+    @RepeatRule.Repeat( times = EXECUTIONS)
+    public void test_subtract(){
+        //calculate correct values
+        float x = x1 - x2;
+        float y = y1 - y2;
+        float z = z1 - z2;
+        //sum operation
+        point1.staticSubtract(point2);
         //checking
         assertEquals("[add] wrong x value", x, point1.x, ERR);
         assertEquals("[add] wrong x value", y, point1.y, ERR);
@@ -164,9 +182,9 @@ public class Point3DTest{
         Point3D base2 = new Point3D(0, 10, 0);
         Point3D base3 = new Point3D(0, 0, 10);
         //rotate points in yaw
-        Point3D point1 = Point3D.rotate(base1, (float) Math.PI/2, 0, 0);
-        Point3D point2 = Point3D.rotate(base2, (float) Math.PI/2, 0, 0);
-        Point3D point3 = Point3D.rotate(base3, (float) Math.PI/2, 0, 0);
+        Point3D point1 = base1.rotate((float) Math.PI/2, 0, 0);
+        Point3D point2 = base2.rotate((float) Math.PI/2, 0, 0);
+        Point3D point3 = base3.rotate((float) Math.PI/2, 0, 0);
         //test results for point 1
         assertEquals(0, point1.getX(), ERR);
         assertEquals(10, point1.getY(), ERR);
@@ -181,9 +199,9 @@ public class Point3DTest{
         assertEquals(10, point3.getZ(), ERR);
         
         //rotate points in pitch
-        point1 = Point3D.rotate(base1, 0, (float) Math.PI/2, 0);
-        point2 = Point3D.rotate(base2, 0, (float) Math.PI/2, 0);
-        point3 = Point3D.rotate(base3, 0, (float) Math.PI/2, 0);
+        point1 = base1.rotate(0, (float) Math.PI/2, 0);
+        point2 = base2.rotate(0, (float) Math.PI/2, 0);
+        point3 = base3.rotate(0, (float) Math.PI/2, 0);
         //test results for point 1
         assertEquals(0, point1.getX(), ERR);
         assertEquals(0, point1.getY(), ERR);
@@ -198,9 +216,9 @@ public class Point3DTest{
         assertEquals(0, point3.getZ(), ERR);
         
         //rotate points in roll
-        point1 = Point3D.rotate(base1, 0, 0, (float) Math.PI/2);
-        point2 = Point3D.rotate(base2, 0, 0, (float) Math.PI/2);
-        point3 = Point3D.rotate(base3, 0, 0, (float) Math.PI/2);
+        point1 = base1.rotate(0, 0, (float) Math.PI/2);
+        point2 = base2.rotate( 0, 0, (float) Math.PI/2);
+        point3 = base3.rotate( 0, 0, (float) Math.PI/2);
         //test results for point 1
         assertEquals(10, point1.getX(), ERR);
         assertEquals(0, point1.getY(), ERR);
@@ -215,13 +233,13 @@ public class Point3DTest{
         assertEquals(0, point3.getZ(), ERR);
         
         //rotate points in yaw and pitch
-        point1 = Point3D.rotate(base1, (float) Math.PI/4, (float) Math.PI/4, 0);
-        point2 = Point3D.rotate(base2, (float) Math.PI/4, (float) Math.PI/4, 0);
-        point3 = Point3D.rotate(base3, (float) Math.PI/4, (float) Math.PI/4, 0);
+        point1 = base1.rotate((float) Math.PI/4, (float) Math.PI/4, 0);
+        point2 = base2.rotate((float) Math.PI/4, (float) Math.PI/4, 0);
+        point3 = base3.rotate( (float) Math.PI/4, (float) Math.PI/4, 0);
         //see if we obtain the same results chaining several rotation operations
-        Point3D point1Decoupled = Point3D.rotate(Point3D.rotate(base1, 0, (float) Math.PI/4, 0), (float) Math.PI/4, 0, 0);
-        Point3D point2Decoupled = Point3D.rotate(Point3D.rotate(base2, 0, (float) Math.PI/4, 0), (float) Math.PI/4, 0, 0);
-        Point3D point3Decoupled = Point3D.rotate(Point3D.rotate(base3, 0, (float) Math.PI/4, 0), (float) Math.PI/4, 0, 0);
+        Point3D point1Decoupled = base1.rotate(0, (float) Math.PI/4, 0).rotate((float) Math.PI/4, 0, 0);
+        Point3D point2Decoupled = base2.rotate(0, (float) Math.PI/4, 0).rotate((float) Math.PI/4, 0, 0);
+        Point3D point3Decoupled = base3.rotate(0, (float) Math.PI/4, 0).rotate((float) Math.PI/4, 0, 0);
         //test results for point 1
         assertEquals(point1.x, point1Decoupled.x, ERR);
         assertEquals(point1.y, point1Decoupled.y, ERR);
@@ -236,13 +254,13 @@ public class Point3DTest{
         assertEquals(point3.z, point3Decoupled.z, ERR);
         
         //rotate points in yaw and pitch and roll
-        point1 = Point3D.rotate(base1, (float) Math.PI/4, (float) Math.PI/4, (float) Math.PI/4);
-        point2 = Point3D.rotate(base2, (float) Math.PI/4, (float) Math.PI/4, (float) Math.PI/4);
-        point3 = Point3D.rotate(base3, (float) Math.PI/4, (float) Math.PI/4, (float) Math.PI/4);
+        point1 = base1.rotate( (float) Math.PI/4, (float) Math.PI/4, (float) Math.PI/4);
+        point2 = base2.rotate( (float) Math.PI/4, (float) Math.PI/4, (float) Math.PI/4);
+        point3 = base3.rotate( (float) Math.PI/4, (float) Math.PI/4, (float) Math.PI/4);
         //see if we obtain the same results chaining several rotation operations
-        point1Decoupled = Point3D.rotate(Point3D.rotate(Point3D.rotate(base1, 0, 0, (float) Math.PI/4), 0, (float) Math.PI/4, 0), (float) Math.PI/4, 0, 0);
-        point2Decoupled = Point3D.rotate(Point3D.rotate(Point3D.rotate(base2, 0, 0, (float) Math.PI/4), 0, (float) Math.PI/4, 0), (float) Math.PI/4, 0, 0);
-        point3Decoupled = Point3D.rotate(Point3D.rotate(Point3D.rotate(base3, 0, 0, (float) Math.PI/4), 0, (float) Math.PI/4, 0), (float) Math.PI/4, 0, 0);
+        point1Decoupled = base1.rotate( 0, 0, (float) Math.PI/4).rotate(0, (float) Math.PI/4, 0).rotate((float) Math.PI/4, 0, 0);
+        point2Decoupled = base2.rotate( 0, 0, (float) Math.PI/4).rotate(0, (float) Math.PI/4, 0).rotate((float) Math.PI/4, 0, 0);
+        point3Decoupled = base3.rotate( 0, 0, (float) Math.PI/4).rotate(0, (float) Math.PI/4, 0).rotate((float) Math.PI/4, 0, 0);
         //test results for point 1
         assertEquals(point1.x, point1Decoupled.x, ERR);
         assertEquals(point1.y, point1Decoupled.y, ERR);

@@ -122,4 +122,25 @@ public class Pose3D extends Point3D implements Serializable{
     public float getRoll() {
         return roll;
     }
+
+    public static float[][] rotateXYZCoordinates(float x, float y, float z, float yaw, float pitch, float roll, float rotateYaw, float rotatePitch, float rotateRoll){
+        float[] coordinates = Point3D.rotateXYZCoordinates(x, y, z, rotateYaw, rotatePitch, rotateRoll);
+        float[] angles = new float[]{
+            MathFunctions.adjustAngleP(yaw + rotateYaw),
+            Math.abs(MathFunctions.adjustAngleP(pitch + rotatePitch)),
+            MathFunctions.adjustAngleP(roll + rotateRoll)
+        };
+        return new float[][]{coordinates, angles};
+    }
+
+    @Override
+    public void staticRotate(float yaw, float pitch, float roll) {
+        float[][] rotation = rotateXYZCoordinates(this.x, this.y, this.z, this.yaw, this.pitch, this.roll, yaw, pitch, roll);
+        this.x = rotation[0][0];
+        this.y = rotation[0][1];
+        this.z = rotation[0][2];
+        this.yaw = rotation[1][0];
+        this.pitch = rotation[1][1];
+        this.roll = rotation[1][2];
+    }
 }

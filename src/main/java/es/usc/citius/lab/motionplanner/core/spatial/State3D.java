@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @since 03/10/2017
  */
-public class State3D extends Pose3D implements Serializable{
+public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
 
     public static final State3D ZERO = new State3D(Pose3D.ZERO, 0f, 0f, 0f, 0f, 0f, 0f);
     private static final long serialVersionUID = 20171003L;
@@ -128,46 +128,44 @@ public class State3D extends Pose3D implements Serializable{
     /**
      * Obtains the state adding the X, Y, Z values of the state and the given point.
      *
-     * @param origin origin state, which provides the velocities and orientation
      * @param move coordinates to add
      * @return state resulting of the addition operation
      */
-    public static State3D add(State3D origin, Point3D move){
-        return new State3D(origin.x + move.x, origin.y + move.y, origin.z + move.z, origin.yaw, origin.pitch, origin.roll, origin.vx, origin.vy, origin.vz, origin.vyaw, origin.vpitch, origin.vroll);
+    public State3D add(Point3D move){
+        return new State3D(this.x + move.x, this.y + move.y, this.z + move.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
+    }
+
+    @Override
+    public State3D add(Point2D move) {
+        return new State3D(this.x + move.x, this.y + move.y, this.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
     }
 
     /**
      * Obtains the state subtracting the X, Y, Z values of the state and the given point.
      *
-     * @param origin origin state, which provides the velocities and orientation
      * @param move coordinates to subtract
      * @return state resulting of the subtraction operation
      */
-    public static State3D subtract(State3D origin, Point3D move){
-        return new State3D(origin.x - move.x, origin.y - move.y, origin.z - move.z, origin.yaw, origin.pitch, origin.roll, origin.vx, origin.vy, origin.vz, origin.vyaw, origin.vpitch, origin.vroll);
+    public State3D subtract(Point3D move){
+        return new State3D(this.x - move.x, this.y - move.y, this.z - move.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
+    }
+
+    @Override
+    public State3D subtract(Point2D move) {
+        return new State3D(this.x - move.x, this.y - move.y, this.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
     }
 
     /**
      * Rotates the position and heading of the state keeping the velocities.
      *
-     * @param origin origin state, providing the velocities
      * @param roll rotation in roll
      * @param pitch rotation in pitch
      * @param yaw rotation in yaw
      * @return rotated state (position and heading) keeping the velocities as they are in local frame
      */
-    public static State3D rotate(State3D origin, float roll, float pitch, float yaw){
-
-        //rotate coordinates
-        float[] rotatedXYZ = Point3D.rotateXYZCoordinates(origin.x, origin.y, origin.z, yaw, pitch, roll);
-
-        //rotated heading
-        float newYaw = MathFunctions.adjustAngleP(origin.yaw + yaw);
-        float newPitch = Math.abs(MathFunctions.adjustAngleP(origin.pitch + pitch));
-        float newRoll = MathFunctions.adjustAngleP(origin.roll + roll);
-
+    public State3D rotate(float yaw, float pitch, float roll){
+        float[][] rotation = Pose3D.rotateXYZCoordinates(this.x, this.y, this.z, this.yaw, this.pitch, this.roll, yaw, pitch, roll);
         //keep velocities
-        return new State3D(rotatedXYZ[0], rotatedXYZ[1], rotatedXYZ[2], newYaw, newPitch, newRoll, origin.vx, origin.vy, origin.vz, origin.vyaw, origin.vpitch, origin.vroll);
-
+        return new State3D(rotation[0][0], rotation[0][1], rotation[0][2], rotation[1][0], rotation[1][1], rotation[1][2], this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
     }
 }

@@ -120,7 +120,7 @@ public class Pose2DTest extends Point2DTest{
         //calculate correct values
         SimpleMatrix expected = new SimpleMatrix(new double[][]{{FastMath.cos(angle), -FastMath.sin(angle), 0}, {FastMath.sin(angle), FastMath.cos(angle), 0}, {0, 0, (angle + yaw1)/yaw1}}).mult(new SimpleMatrix(pose1.getMatrix()));
         //rotate operation
-        pose1.rotate(angle);
+        pose1.staticRotate(angle);
         //checking
         assertEquals("[rotate] wrong x value", expected.get(0), pose1.x, ERR);
         assertEquals("[rotate] wrong y value", expected.get(1), pose1.y, ERR);
