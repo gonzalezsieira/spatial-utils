@@ -91,4 +91,18 @@ public interface Geometry<S extends Object> extends Cloneable {
      */
     public S rotate(float yaw, float pitch, float roll);
 
+    /**
+     * Returns the symmetry axis of a Geometry object. It can be symmetric respect to the X axis or the Y axis (depends on its proximity).
+     *
+     * @return 0 if symmetry axis is X, 1 if it is Y
+     */
+    public int symmetryAxis();
+
+    /**
+     * Creates a copy of this element.
+     *
+     * @return copy of this instance.
+     */
+    public S clone();
+
 }

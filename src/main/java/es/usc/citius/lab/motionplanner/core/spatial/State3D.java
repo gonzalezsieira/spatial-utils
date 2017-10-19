@@ -168,4 +168,15 @@ public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
         //keep velocities
         return new State3D(rotation[0][0], rotation[0][1], rotation[0][2], rotation[1][0], rotation[1][1], rotation[1][2], this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
     }
+
+    @Override
+    public State3D clone() {
+        return new State3D(this);
+    }
+
+    @Override
+    public int symmetryAxis() {
+        //obtain angle / (pi / 2) mod 2. If angleSymmetriAxis == 0 then Axis = X, else Axis = Y
+        return Math.abs(Math.round( 2 * this.yawTo(Point3D.ZERO) / MathFunctions.PI)) % 2;
+    }
 }

@@ -262,4 +262,15 @@ public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
         //new State2D
         return new State2D(rotatedXY[0], rotatedXY[1], newAngle, this.vx, this.vy, this.w);
     }
+
+    @Override
+    public State2D clone() {
+        return new State2D(this);
+    }
+
+    @Override
+    public int symmetryAxis() {
+        //obtain angle / (pi / 2) mod 2. If angleSymmetriAxis == 0 then Axis = X, else Axis = Y
+        return Math.abs(Math.round( 2 * this.absoluteAngle() / MathFunctions.PI)) % 2;
+    }
 }
