@@ -28,7 +28,7 @@ import org.ejml.simple.SimpleMatrix;
  *
  * @author Adrián González Sieira <adrian.gonzalez@usc.es>
  */
-public class Point3D implements Serializable{
+public class Point3D implements Point, Serializable{
 
     public static final Point3D ZERO = new Point3D(0, 0, 0);
     private static final long serialVersionUID = 20140710L;
@@ -268,14 +268,23 @@ public class Point3D implements Serializable{
      * **********************************************************************
      */
     /**
-     * Performs the sum of the (x, y, z) coordinates of two instances of
-     * {@link Point3D}.
+     * Performs the sum of the (x, y, z) coordinates
      *
      * @param move transform point
      * @return new {@link Point3D} with coordinates (point.x + move.x, point.y + move.y, point.z + move.z)
      */
-    public Point3D add(Point3D move) {
-        return new Point3D(this.x + move.x, this.y + move.y, this.z + move.z);
+    public Point3D add(Point move) {
+        return new Point3D(this.x + move.getX(), this.y + move.getY(), this.z + move.getZ());
+    }
+
+    /**
+     * Performs the subtraction of the (x, y, z) coordinates
+     *
+     * @param move transform point
+     * @return new {@link Point3D} with coordinates (point.x - move.x, point.y - move.y, point.z - move.z)
+     */
+    public Point3D subtract(Point move) {
+        return new Point3D(this.x - move.getX(), this.y - move.getY(), this.z - move.getZ());
     }
 
     /**
@@ -335,20 +344,10 @@ public class Point3D implements Serializable{
      *
      * @param move addition amount
      */
-    public void staticAdd(Point3D move) {
-        this.x += move.x;
-        this.y += move.y;
-        this.z += move.z;
-    }
-
-    /**
-     * Sum operation (in 2D) of two instances of Point3D and Point2D. The result is applied in this same instance.
-     *
-     * @param move addition amount
-     */
-    public void staticAdd(Point2D move) {
-        this.x += move.x;
-        this.y += move.y;
+    public void staticAdd(Point move) {
+        this.x += move.getX();
+        this.y += move.getY();
+        this.z += move.getZ();
     }
 
     /**
@@ -356,20 +355,10 @@ public class Point3D implements Serializable{
      *
      * @param move subtraction amount
      */
-    public void staticSubtract(Point3D move) {
-        this.x -= move.x;
-        this.y -= move.y;
-        this.z -= move.z;
-    }
-
-    /**
-     * Subtraction operation (in 2D) of two instances of Point3D and Point2D. The result is applied in this same instance.
-     *
-     * @param move subtraction amount
-     */
-    public void staticSubtract(Point2D move) {
-        this.x -= move.x;
-        this.y -= move.y;
+    public void staticSubtract(Point move) {
+        this.x -= move.getX();
+        this.y -= move.getY();
+        this.z -= move.getZ();
     }
 
     /**

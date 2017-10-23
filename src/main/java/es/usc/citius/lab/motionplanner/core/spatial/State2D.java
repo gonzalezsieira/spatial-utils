@@ -28,7 +28,7 @@ import org.ejml.simple.SimpleMatrix;
  *
  * @author Adrián González Sieira <<a href="mailto:adrian.gonzalez@usc.es">adrian.gonzalez@usc.es</a>>
  */
-public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
+public class State2D extends Pose2D implements Serializable, State {
 	
     public static final State2D ZERO = new State2D(Pose2D.ZERO, 0,0, 0);
     private static final long serialVersionUID = 20140710L;
@@ -220,12 +220,8 @@ public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
      * @return new {@link State2D} with coordinates (this.x + move.x, this.y + move.y, this.yaw, this.vx, this.vy, this.w)
      */
     @Override
-    public State2D add(Point3D move){
-        return new State2D(this.x + move.x, this.y + move.y, this.yaw, this.vx, this.vy, this.w);
-    }
-
-    public State2D add(Point2D move) {
-        return new State2D(this.x + move.x, this.y + move.y, this.yaw, this.vx, this.vy, this.w);
+    public State2D add(Point move){
+        return new State2D(this.x + move.getX(), this.y + move.getY(), this.yaw, this.vx, this.vy, this.w);
     }
 
     /**
@@ -236,12 +232,8 @@ public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
      * @return new {@link State2D} with coordinates (this.x - move.x, this.y - move.y, this.yaw, this.vx, this.vy, this.w)
      */
     @Override
-    public State2D subtract(Point3D move){
-        return new State2D(this.x - move.x, this.y - move.y, this.yaw, this.vx, this.vy, this.w);
-    }
-
-    public State2D subtract(Point2D move) {
-        return new State2D(this.x - move.x, this.y - move.y, this.yaw, this.vx, this.vy, this.w);
+    public State2D subtract(Point move){
+        return new State2D(this.x - move.getX(), this.y - move.getY(), this.yaw, this.vx, this.vy, this.w);
     }
 
     /**
@@ -271,4 +263,40 @@ public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
         //obtain angle / (pi / 2) mod 2. If angleSymmetriAxis == 0 then Axis = X, else Axis = Y
         return Math.abs(Math.round( 2 * this.absoluteAngle() / MathFunctions.PI)) % 2;
     }
+
+    @Override
+    public float getVz() {
+        return 0;
+    }
+
+    @Override
+    public float getVroll() {
+        return 0;
+    }
+
+    @Override
+    public float getVpitch() {
+        return 0;
+    }
+
+    @Override
+    public float getVyaw() {
+        return 0;
+    }
+
+    @Override
+    public float getZ() {
+        return 0;
+    }
+
+    @Override
+    public float getPitch() {
+        return 0;
+    }
+
+    @Override
+    public float getRoll() {
+        return 0;
+    }
+
 }

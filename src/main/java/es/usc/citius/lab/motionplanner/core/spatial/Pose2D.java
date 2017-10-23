@@ -28,7 +28,7 @@ import org.ejml.data.DenseMatrix64F;
  *
  * @author Adrián González Sieira <<a href="mailto:adrian.gonzalez@usc.es">adrian.gonzalez@usc.es</a>>
  */
-public class Pose2D extends Point2D implements Serializable{
+public class Pose2D extends Point2D implements Pose, Serializable{
 
     public static final Pose2D ZERO = new Pose2D(Point2D.ZERO, 0);
     private static final long serialVersionUID = 20140710L;
@@ -77,8 +77,19 @@ public class Pose2D extends Point2D implements Serializable{
      *                              GETTERS
      ************************************************************************/
 
+    @Override
     public float getYaw() {
         return yaw;
+    }
+
+    @Override
+    public float getPitch() {
+        return 0;
+    }
+
+    @Override
+    public float getRoll() {
+        return 0;
     }
 
     @Override
@@ -102,25 +113,29 @@ public class Pose2D extends Point2D implements Serializable{
     }
 
     /**
-     * Obtains the symmetric pose respect to the X axis:
-     * (x, -y, reflectedYawX) 
-     * 
-     * @return reflected {@link Pose2D}, respect to the X axis
+     * Obtains the symmetric state respect to the X axis:
+     * (x, -y, reflectedYawX, vx, -w)
+     *
+     * @return reflected {@link State2D}, respect to the X axis
      */
-    public Pose2D symmetricAxisX(){
+    public Pose2D symmetricPlaneXZ(){
         float angle = MathFunctions.adjustAngleP(-yaw);
         return new Pose2D(x, -y, angle);
     }
 
     /**
-     * Obtains the symmetric pose respect to the Y axis:
-     * (-x, y, reflectedYawY) 
-     * 
-     * @return reflected {@link Pose2D}, respect to the Y axis
+     * Obtains the symmetric state respect to the Y axis:
+     * (-x, y, reflectedYawY, vx, -w)
+     *
+     * @return reflected {@link State2D}, respect to the Y axis
      */
-    public Pose2D symmetricAxisY(){
+    public Pose2D symmetricPlaneYZ(){
         float angle = MathFunctions.adjustAngleP(MathFunctions.PI - yaw);
         return new Pose2D(-x, y, angle);
+    }
+
+    public Pose2D symmetricPlaneXY() {
+        return new Pose2D(this);
     }
 
     /************************************************************************
@@ -150,54 +165,43 @@ public class Pose2D extends Point2D implements Serializable{
         return true;
     }
 
-
-    /************************************************************************
-     *                  STATIC GEOMETRIC OPERATION METHODS
-     ************************************************************************/
-
-    /**
-     * Performs the sum of the (x, y) coordinates of a {@link Pose2D}
-     * and a {@link Point2D}. 
-     *
-     * @param move transform point
-     * @return new {@link Pose2D} with coordinates (this.x + move.x, this.y + move.y, this.yaw)
-     */
-    public static Pose2D add(Pose2D base, Point2D move){
-        return new Pose2D(base.x + move.x, base.y + move.y, base.yaw);
-    }
-
-    /**
-     * Performs the subtract of the (x, y) coordinates of a {@link Pose2D}
-     * and a {@link Point2D}. 
-     *
-     * @param move transform point
-     * @return new {@link Pose2D} with coordinates (this.x - move.x, this.y - move.y, this.yaw)
-     */
-    public static Pose2D subtract(Pose2D base, Point2D move){
-        return new Pose2D(base.x - move.x, base.y - move.y, base.yaw);
-    }
-
-    /**
-     * Rotates a {@link Pose2D} instance a given angle. The rotated
-     * instance has the X and Y coordinates rotated and also the heading.
-     *
-     * @param angle rotation parameter
-     * @return rotated {@link Pose2D}
-     */
-    public static Pose2D rotate(Pose2D base, float angle){
-        //rotated (x, y)
-        float[] rotatedXY = Point2D.rotateXYCoordinates(base.x, base.y, angle);
+    @Override
+    public void staticRotate(float yaw, float pitch, float roll) {
+        super.staticRotate(yaw, pitch, roll);
         //rotated heading
-        float newAngle = MathFunctions.adjustAngleP(base.yaw + angle);
-        //new Pose2D
-        return new Pose2D(rotatedXY[0], rotatedXY[1], newAngle);
+        this.yaw = MathFunctions.adjustAngleP(this.yaw + yaw);
     }
 
     @Override
-    public void staticRotate(float angle) {
-        super.staticRotate(angle);
+    public Pose2D rotate(float yaw, float pitch, float roll) {
+        //rotated (x, y)
+        float[] rotatedXY = Point2D.rotateXYCoordinates(this.x, this.y, yaw);
         //rotated heading
-        this.yaw = MathFunctions.adjustAngleP(this.yaw + angle);
+        float newAngle = MathFunctions.adjustAngleP(this.yaw + yaw);
+        //new State2D
+        return new Pose2D(rotatedXY[0], rotatedXY[1], newAngle);
+    }
+
+    /**
+     * Performs the sum of the (x, y) coordinates
+     *
+     * @param move transform point
+     * @return new {@link Pose2D} with coordinates (point.x + move.x, point.y + move.y, point.yaw)
+     */
+    @Override
+    public Pose2D add(Point move) {
+        return new Pose2D(this.x + move.getX(), this.y + move.getY(), this.yaw);
+    }
+
+    /**
+     * Performs the subtraction of the (x, y) coordinates
+     *
+     * @param move transform point
+     * @return new {@link Pose2D} with coordinates (point.x - move.x, point.y - move.y, point.yaw)
+     */
+    @Override
+    public Pose2D subtract(Point move) {
+        return new Pose2D(this.x - move.getX(), this.y - move.getY(), this.yaw);
     }
 
 }

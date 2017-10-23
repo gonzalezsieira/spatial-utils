@@ -242,7 +242,7 @@ public class Point2DTest {
         //calculate correct values
         SimpleMatrix expected = new SimpleMatrix(new double[][]{{FastMath.cos(angle), -FastMath.sin(angle)}, {FastMath.sin(angle), FastMath.cos(angle)}}).mult(new SimpleMatrix(point1.getMatrix()));
         //rotate operation
-        point1.staticRotate(angle);
+        point1.staticRotate(angle, 0f, 0f);
         //checking
         assertEquals("[rotate] wrong x value", expected.get(0), point1.x, ERR);
         assertEquals("[rotate] wrong y value", expected.get(1), point1.y, ERR);
@@ -333,7 +333,7 @@ public class Point2DTest {
         float x = x1 + x2;
         float y = y1 + y2;
         //static sum operation
-        Point2D result = Point2D.add(point1, point2);
+        Point2D result = point1.add(point2);
         //checking
         assertEquals("[static add] wrong x value", x, result.x, ERR);
         assertEquals("[static add] wrong x value", y, result.y, ERR);
@@ -349,7 +349,7 @@ public class Point2DTest {
         float x = x1 - x2;
         float y = y1 - y2;
         //static subtract operation
-        Point2D result = Point2D.subtract(point1, point2);
+        Point2D result = point1.subtract(point2);
         //checking
         assertEquals("[static subtract] wrong x value", x, result.x, ERR);
         assertEquals("[static subtract] wrong y value", y, result.y, ERR);
@@ -366,7 +366,7 @@ public class Point2DTest {
         //calculate correct values
         SimpleMatrix expected = new SimpleMatrix(new double[][]{{FastMath.cos(angle), -FastMath.sin(angle)}, {FastMath.sin(angle), FastMath.cos(angle)}}).mult(new SimpleMatrix(point1.getMatrix()));
         //rotate operation
-        Point2D result = Point2D.rotate(point1, angle);
+        Point2D result = point1.rotate(angle, 0f, 0f);
         //checking
         assertEquals("[rotate] wrong x value", expected.get(0), result.x, ERR);
         assertEquals("[rotate] wrong y value", expected.get(1), result.y, ERR);

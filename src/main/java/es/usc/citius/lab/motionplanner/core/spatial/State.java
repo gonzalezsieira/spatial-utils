@@ -1,21 +1,21 @@
 package es.usc.citius.lab.motionplanner.core.spatial;
 
-public interface Geometry<S> {
+public interface State extends Pose{
 
     /**
-     * @return reflected Geometry respect to the XZ plane
+     * @return reflected State respect to the XZ plane
      */
-    public S symmetricPlaneXZ();
+    public State symmetricPlaneXZ();
 
     /**
-     * @return reflected Geometry respect to the YZ plane
+     * @return reflected State respect to the YZ plane
      */
-    public S symmetricPlaneYZ();
+    public State symmetricPlaneYZ();
 
     /**
-     * @return reflected Geometry, respect to the XY plane
+     * @return reflected State, respect to the XY plane
      */
-    public S symmetricPlaneXY();
+    public State symmetricPlaneXY();
 
     /**
      * Obtains the state adding the X, Y, Z values of the state and the given point.
@@ -23,7 +23,7 @@ public interface Geometry<S> {
      * @param move coordinates to add (3D)
      * @return state resulting of the addition operation
      */
-    public S add(Point3D move);
+    public State add(Point move);
 
     /**
      * Obtains the state adding the X, Y, Z values of the state and the given point. Does not create
@@ -31,7 +31,7 @@ public interface Geometry<S> {
      *
      * @param move coordinates to add (3D)
      */
-    public void staticAdd(Point3D move);
+    public void staticAdd(Point move);
 
     /**
      * Obtains the state subtracting the X, Y, Z values of the state and the given point.
@@ -39,7 +39,7 @@ public interface Geometry<S> {
      * @param move coordinates to subtract (3D)
      * @return state resulting of the subtraction operation
      */
-    public S subtract(Point3D move);
+    public State subtract(Point move);
 
     /**
      * Obtains the state subtracting the X, Y, Z values of the state and the given point. Does not create
@@ -47,7 +47,7 @@ public interface Geometry<S> {
      *
      * @param move coordinates to subtract (3D)
      */
-    public void staticSubtract(Point3D move);
+    public void staticSubtract(Point move);
 
     /**
      * Rotates the position and heading of the state keeping the velocities.
@@ -57,10 +57,10 @@ public interface Geometry<S> {
      * @param pitch rotation in pitch
      * @return rotated state (position and heading) keeping the velocities as they are in local frame
      */
-    public S rotate(float yaw, float pitch, float roll);
+    public State rotate(float yaw, float pitch, float roll);
 
     /**
-     * Returns the symmetry plane of a Geometry object. It can be symmetric respect to the XZ plane or the YZ plane (depends on its proximity to each one).
+     * Returns the symmetry plane of a State object. It can be symmetric respect to the XZ plane or the YZ plane (depends on its proximity to each one).
      *
      * @return 0 if symmetry axis is X, 1 if it is Y
      */
@@ -71,6 +71,21 @@ public interface Geometry<S> {
      *
      * @return copy of this instance.
      */
-    public S clone();
+    public State clone();
+
+    /**
+     * Mandatory getters
+     */
+    public float getVx();
+
+    public float getVy();
+
+    public float getVz();
+
+    public float getVroll();
+
+    public float getVpitch();
+
+    public float getVyaw();
 
 }

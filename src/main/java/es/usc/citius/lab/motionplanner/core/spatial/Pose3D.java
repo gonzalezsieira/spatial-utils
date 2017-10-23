@@ -25,7 +25,7 @@ import java.io.Serializable;
  *
  * @author Adrián González Sieira <<a href="mailto:adrian.gonzalez@usc.es">adrian.gonzalez@usc.es</a>>
  */
-public class Pose3D extends Point3D implements Serializable{
+public class Pose3D extends Point3D implements Pose, Serializable{
 
     public static final Pose3D ZERO = new Pose3D(Point3D.ZERO, 0,0, 0);
     private static final long serialVersionUID = 20171003L;
@@ -74,40 +74,6 @@ public class Pose3D extends Point3D implements Serializable{
     }
 
     /************************************************************************
-     * 					GEOMETRIC OPERATION METHODS
-     ************************************************************************/
-
-    /**
-     * Obtains the symmetric state respect to the X axis:
-     * (x, -y, z, reflectedYawX, pitch, reflectedRoll)
-     *
-     * @return reflected {@link State2D}, respect to the X axis
-     */
-    public Pose3D symmetricAxisXZ(){
-        return new Pose3D(x, -y, z, MathFunctions.adjustAngleP(-this.yaw), pitch, MathFunctions.adjustAngleP(-this.roll));
-    }
-
-    /**
-     * Obtains the symmetric state respect to the Y axis:
-     * (-x, y, z, reflectedYawY, pitch, roll)
-     *
-     * @return reflected {@link State2D}, respect to the Y axis
-     */
-    public Pose3D symmetricAxisYZ(){
-        return new Pose3D(-x, y, z, MathFunctions.adjustAngleP(MathFunctions.PI - yaw), pitch, roll);
-    }
-
-    /**
-     * Obtains the symmetric state respect to the Y axis:
-     * (x, y, -z, yaw, reflectedPitch, reflectedRoll)
-     *
-     * @return reflected {@link State2D}, respect to the Y axis
-     */
-    public Pose3D symmetricAxisXY(){
-        return new Pose3D(x, y, -z, yaw, -pitch, MathFunctions.adjustAngleP(-this.roll));
-    }
-
-    /************************************************************************
      *                      	GETTERS
      ************************************************************************/
 
@@ -133,6 +99,20 @@ public class Pose3D extends Point3D implements Serializable{
         return new float[][]{coordinates, angles};
     }
 
+    /**
+     * Rotates the position and heading of the pose
+     *
+     * @param roll rotation in roll
+     * @param pitch rotation in pitch
+     * @param yaw rotation in yaw
+     * @return rotated state (position and heading)
+     */
+    public Pose3D rotate(float yaw, float pitch, float roll){
+        float[][] rotation = Pose3D.rotateXYZCoordinates(this.x, this.y, this.z, this.yaw, this.pitch, this.roll, yaw, pitch, roll);
+        //keep velocities
+        return new Pose3D(rotation[0][0], rotation[0][1], rotation[0][2], rotation[1][0], rotation[1][1], rotation[1][2]);
+    }
+
     @Override
     public void staticRotate(float yaw, float pitch, float roll) {
         float[][] rotation = rotateXYZCoordinates(this.x, this.y, this.z, this.yaw, this.pitch, this.roll, yaw, pitch, roll);
@@ -143,4 +123,27 @@ public class Pose3D extends Point3D implements Serializable{
         this.pitch = rotation[1][1];
         this.roll = rotation[1][2];
     }
+
+    /**
+     * Performs the sum of the (x, y, z) coordinates
+     *
+     * @param move transform point
+     * @return new {@link Pose3D} with coordinates (pose.x + move.x, pose.y + move.y, pose.z + move.z, pose.yaw, pose.pitch, pose.roll)
+     */
+    @Override
+    public Pose3D add(Point move) {
+        return new Pose3D(this.x + move.getX(), this.y + move.getY(), this.z + move.getZ(), this.yaw, this.pitch, this.roll);
+    }
+
+    /**
+     * Performs the subtraction of the (x, y, z) coordinates
+     *
+     * @param move transform point
+     * @return new {@link Point3D} with coordinates (pose.x - move.x, pose.y - move.y, pose.z - move.z, pose.yaw, pose.pitch, pose.roll)
+     */
+    @Override
+    public Pose3D subtract(Point move) {
+        return new Pose3D(this.x - move.getX(), this.y - move.getY(), this.z - move.getZ(), this.yaw, this.pitch, this.roll);
+    }
+
 }

@@ -28,7 +28,7 @@ import org.ejml.simple.SimpleMatrix;
  *
  * @author Adrián González Sieira <adrian.gonzalez@usc.es>
  */
-public class Point2D implements Serializable{
+public class Point2D implements Point, Serializable{
 
     public static final Point2D ZERO = new Point2D(0, 0);
     private static final long serialVersionUID = 20140710L;
@@ -76,7 +76,12 @@ public class Point2D implements Serializable{
     public float getY() {
         return y;
     }
-    
+
+    @Override
+    public float getZ() {
+        return 0;
+    }
+
     /**
      * Retrieves a {@link SimpleMatrix} with the information of this point.
      * 
@@ -207,51 +212,6 @@ public class Point2D implements Serializable{
     }
 
     /**
-     * **********************************************************************
-     * STATIC GEOMETRIC OPERATION METHODS
-     * **********************************************************************
-     */
-    /**
-     * Performs the sum of the (x, y) coordinates of two instances of
-     * {@link Point2D}.
-     *
-     * @param point original point
-     * @param move transform point
-     * @return new {@link Point2D} with coordinates (point.x + move.x, point.y +
-     * move.y)
-     */
-    public static Point2D add(Point2D point, Point2D move) {
-        return new Point2D(point.x + move.x, point.y + move.y);
-    }
-
-    /**
-     * Performs the subtract of the (x, y) coordinates of two instances of
-     * {@link Point2D}.
-     *
-     * @param point original point
-     * @param move transform point
-     * @return new {@link Point2D} with coordinates (point.x - move.x, point.y -
-     * move.y)
-     */
-    public static Point2D subtract(Point2D point, Point2D move) {
-        return new Point2D(point.x - move.x, point.y - move.y);
-    }
-
-    /**
-     * Rotates the an instance of {@link Point2D} and obtains the point rotated
-     * by the angle specified.
-     *
-     * @param point current (x, y) point
-     * @param angle rotation angle
-     * @return new {@link Point2D} after rotation
-     */
-    public static Point2D rotate(Point2D point, float angle) {
-        //new (x, y)
-        float[] rotatedXY = rotateXYCoordinates(point.x, point.y, angle);
-        return new Point2D(rotatedXY[0], rotatedXY[1]);
-    }
-
-    /**
      * Implements the rotation for the x-y coordinates and returns an array with
      * the rotated ones.
      *
@@ -274,12 +234,22 @@ public class Point2D implements Serializable{
     /**
      * Rotates the Point2D instance applying the result in the same instance.
      *
-     * @param angle rotation angle
+     * @param yaw rotation angle
      */
-    public void staticRotate(float angle){
-        float[] rotation = rotateXYCoordinates(x, y, angle);
+    public void staticRotate(float yaw, float pitch, float roll){
+        float[] rotation = rotateXYCoordinates(x, y, yaw);
         this.x = rotation[0];
         this.y = rotation[1];
+    }
+
+    /**
+     * Rotates the Point2D instance
+     *
+     * @param yaw rotation angle
+     */
+    public Point2D rotate(float yaw, float pitch, float roll){
+        float[] rotation = rotateXYCoordinates(x, y, yaw);
+        return new Point2D(rotation[0], rotation[1]);
     }
 
     /**
@@ -287,19 +257,9 @@ public class Point2D implements Serializable{
      *
      * @param move addition amount
      */
-    public void staticAdd(Point3D move) {
-        this.x += move.x;
-        this.y += move.y;
-    }
-
-    /**
-     * Addition operation (in 2D) of two instances of Point2D. The result is applied in this same instance.
-     *
-     * @param move addition amount
-     */
-    public void staticAdd(Point2D move) {
-        this.x += move.x;
-        this.y += move.y;
+    public void staticAdd(Point move) {
+        this.x += move.getX();
+        this.y += move.getY();
     }
 
     /**
@@ -307,19 +267,29 @@ public class Point2D implements Serializable{
      *
      * @param move subtraction amount
      */
-    public void staticSubtract(Point3D move) {
-        this.x -= move.x;
-        this.y -= move.y;
+    public void staticSubtract(Point move) {
+        this.x -= move.getX();
+        this.y -= move.getY();
     }
 
     /**
-     * Subtraction operation (in 2D) of two instances of Point2D and Point3D. The result is applied in this same instance.
+     * Performs the sum of the (x, y) coordinates
      *
-     * @param move subtraction amount
+     * @param move transform point
+     * @return new {@link Point2D} with coordinates (point.x + move.x, point.y + move.y)
      */
-    public void staticSubtract(Point2D move) {
-        this.x -= move.x;
-        this.y -= move.y;
+    public Point2D add(Point move) {
+        return new Point2D(this.x + move.getX(), this.y + move.getY());
+    }
+
+    /**
+     * Performs the subtraction of the (x, y) coordinates
+     *
+     * @param move transform point
+     * @return new {@link Point2D} with coordinates (point.x - move.x, point.y - move.y)
+     */
+    public Point2D subtract(Point move) {
+        return new Point2D(this.x - move.getX(), this.y - move.getY());
     }
 
 }

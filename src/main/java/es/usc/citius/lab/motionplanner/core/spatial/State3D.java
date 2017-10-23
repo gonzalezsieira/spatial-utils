@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @since 03/10/2017
  */
-public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
+public class State3D extends Pose3D implements Serializable, State {
 
     public static final State3D ZERO = new State3D(Pose3D.ZERO, 0f, 0f, 0f, 0f, 0f, 0f);
     private static final long serialVersionUID = 20171003L;
@@ -131,8 +131,9 @@ public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
      * @param move coordinates to add
      * @return state resulting of the addition operation
      */
-    public State3D add(Point3D move){
-        return new State3D(this.x + move.x, this.y + move.y, this.z + move.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
+    @Override
+    public State3D add(Point move){
+        return new State3D(this.x + move.getX(), this.y + move.getY(), this.z + move.getZ(), this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
     }
 
     /**
@@ -141,8 +142,9 @@ public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
      * @param move coordinates to subtract
      * @return state resulting of the subtraction operation
      */
-    public State3D subtract(Point3D move){
-        return new State3D(this.x - move.x, this.y - move.y, this.z - move.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
+    @Override
+    public State3D subtract(Point move){
+        return new State3D(this.x - move.getX(), this.y - move.getY(), this.z - move.getZ(), this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
     }
 
     /**

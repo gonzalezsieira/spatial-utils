@@ -120,7 +120,7 @@ public class Pose2DTest extends Point2DTest{
         //calculate correct values
         SimpleMatrix expected = new SimpleMatrix(new double[][]{{FastMath.cos(angle), -FastMath.sin(angle), 0}, {FastMath.sin(angle), FastMath.cos(angle), 0}, {0, 0, (angle + yaw1)/yaw1}}).mult(new SimpleMatrix(pose1.getMatrix()));
         //rotate operation
-        pose1.staticRotate(angle);
+        pose1.staticRotate(angle, 0f, 0f);
         //checking
         assertEquals("[rotate] wrong x value", expected.get(0), pose1.x, ERR);
         assertEquals("[rotate] wrong y value", expected.get(1), pose1.y, ERR);
@@ -133,7 +133,7 @@ public class Pose2DTest extends Point2DTest{
         float x = x1 + x2;
         float y = y1 + y2;
         //static sum operation
-        Pose2D result = Pose2D.add(pose1, point2);
+        Pose2D result = pose1.add(point2);
         //checking
         assertEquals("[static add] wrong x value", x, result.x, ERR);
         assertEquals("[static add] wrong x value", y, result.y, ERR);
@@ -146,7 +146,7 @@ public class Pose2DTest extends Point2DTest{
         float x = x1 - x2;
         float y = y1 - y2;
         //static subtract operation
-        Pose2D result = Pose2D.subtract(pose1, point2);
+        Pose2D result = pose1.subtract(point2);
         //checking
         assertEquals("[static subtract] wrong x value", x, result.x, ERR);
         assertEquals("[static subtract] wrong y value", y, result.y, ERR);
@@ -160,7 +160,7 @@ public class Pose2DTest extends Point2DTest{
         //calculate correct values
         SimpleMatrix expected = new SimpleMatrix(new double[][]{{FastMath.cos(angle), -FastMath.sin(angle), 0}, {FastMath.sin(angle), FastMath.cos(angle), 0}, {0, 0, (angle + yaw1)/yaw1}}).mult(new SimpleMatrix(pose1.getMatrix()));
         //rotate operation
-        Pose2D result = Pose2D.rotate(pose1, angle);
+        Pose2D result = pose1.rotate(angle, 0f, 0f);
         //checking
         assertEquals("[static rotate] wrong x value", expected.get(0), result.x, ERR);
         assertEquals("[static rotate] wrong y value", expected.get(1), result.y, ERR);
@@ -173,7 +173,7 @@ public class Pose2DTest extends Point2DTest{
     @Test
     @Repeat( times = EXECUTIONS)
     public void test_symmetricAxisX(){
-        Pose2D result = pose1.symmetricAxisX();
+        Pose2D result = pose1.symmetricPlaneXZ();
         assertEquals("[symmetricAxisX] wrong x value", x1, result.x, ERR);
         assertEquals("[symmetricAxisX] wrong y value", -y1, result.y, ERR);
         assertEquals("[symmetricAxisX] wrong yaw value", -yaw1, result.yaw, ERR);
@@ -186,7 +186,7 @@ public class Pose2DTest extends Point2DTest{
     @Test
     @Repeat( times = EXECUTIONS)
     public void test_symmetricAxisY(){
-        Pose2D result = pose1.symmetricAxisY();
+        Pose2D result = pose1.symmetricPlaneYZ();
         assertEquals("[symmetricAxisX] wrong x value", -x1, result.x, ERR);
         assertEquals("[symmetricAxisX] wrong y value", y1, result.y, ERR);
         assertEquals("[symmetricAxisX] wrong yaw value", MathFunctions.adjustAngleP(MathFunctions.PI - yaw1), result.yaw, ERR);

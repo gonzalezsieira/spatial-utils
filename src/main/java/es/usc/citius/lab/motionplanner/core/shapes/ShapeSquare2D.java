@@ -108,7 +108,7 @@ public final class ShapeSquare2D extends Shape2D {
             //create straight line of the side at that angle
             Pair<Point2D, Point2D> side = sideOfAngle(Pose2D.ZERO, angle);
             //rotated basis
-            Point2D p2 = Point2D.rotate(p1, angle);
+            Point2D p2 = p1.rotate(angle, 0f, 0f);
             //select point of intersection
             Point2D intersection = SpatialFunctions.getLineLineIntersection(Point2D.ZERO, p2, side.getKey(), side.getContent());
             //add position in the border to the map, with degree resolution
@@ -179,8 +179,8 @@ public final class ShapeSquare2D extends Shape2D {
 
         //now the points are rotated to make the sides of the robot match with the heading
         //in global coordinates
-        p1.staticRotate(pose.yaw);
-        p2.staticRotate(pose.yaw);
+        p1.staticRotate(pose.yaw, 0f, 0f);
+        p2.staticRotate(pose.yaw, 0f, 0f);
         p1.staticAdd(pose);
         p2.staticAdd(pose);
         //now the straight line is built
