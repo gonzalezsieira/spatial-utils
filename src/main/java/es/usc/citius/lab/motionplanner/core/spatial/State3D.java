@@ -96,7 +96,7 @@ public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
      * @return reflected {@link State2D}, respect to the X axis
      */
     @Override
-    public State3D symmetricAxisXZ(){
+    public State3D symmetricPlaneXZ(){
         return new State3D(x, -y, z, MathFunctions.adjustAngleP(-this.yaw), pitch, MathFunctions.adjustAngleP(-this.roll), vx, -vy, vz, -vyaw, vpitch, -vroll);
     }
 
@@ -107,7 +107,7 @@ public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
      * @return reflected {@link State2D}, respect to the Y axis
      */
     @Override
-    public State3D symmetricAxisYZ(){
+    public State3D symmetricPlaneYZ(){
         return new State3D(-x, y, z, MathFunctions.adjustAngleP(MathFunctions.PI - yaw), pitch, roll, vx, -vy, vz, -vyaw, vpitch, -vroll);
     }
 
@@ -118,7 +118,7 @@ public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
      * @return reflected {@link State2D}, respect to the Y axis
      */
     @Override
-    public State3D symmetricAxisXY(){
+    public State3D symmetricPlaneXY(){
         return new State3D(x, y, -z, yaw, -pitch, MathFunctions.adjustAngleP(-this.roll), vx, vy, -vz, vyaw, -vpitch, vroll);
     }
 
@@ -135,11 +135,6 @@ public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
         return new State3D(this.x + move.x, this.y + move.y, this.z + move.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
     }
 
-    @Override
-    public State3D add(Point2D move) {
-        return new State3D(this.x + move.x, this.y + move.y, this.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
-    }
-
     /**
      * Obtains the state subtracting the X, Y, Z values of the state and the given point.
      *
@@ -148,11 +143,6 @@ public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
      */
     public State3D subtract(Point3D move){
         return new State3D(this.x - move.x, this.y - move.y, this.z - move.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
-    }
-
-    @Override
-    public State3D subtract(Point2D move) {
-        return new State3D(this.x - move.x, this.y - move.y, this.z, this.yaw, this.pitch, this.roll, this.vx, this.vy, this.vz, this.vyaw, this.vpitch, this.vroll);
     }
 
     /**
@@ -175,7 +165,7 @@ public class State3D extends Pose3D implements Serializable, Geometry<State3D>{
     }
 
     @Override
-    public int symmetryAxis() {
+    public int symmetryPlane() {
         //obtain angle / (pi / 2) mod 2. If angleSymmetriAxis == 0 then Axis = X, else Axis = Y
         return Math.abs(Math.round( 2 * this.yawTo(Point3D.ZERO) / MathFunctions.PI)) % 2;
     }

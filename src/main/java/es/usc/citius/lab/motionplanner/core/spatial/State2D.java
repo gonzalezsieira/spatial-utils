@@ -186,7 +186,7 @@ public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
      * @return reflected {@link State2D}, respect to the X axis
      */
     @Override
-    public State2D symmetricAxisXZ(){
+    public State2D symmetricPlaneXZ(){
         float angle = MathFunctions.adjustAngleP(-yaw);
         return new State2D(x, -y, angle, vx, -vy, -w);
     }
@@ -198,13 +198,13 @@ public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
      * @return reflected {@link State2D}, respect to the Y axis
      */
     @Override
-    public State2D symmetricAxisYZ(){
+    public State2D symmetricPlaneYZ(){
         float angle = MathFunctions.adjustAngleP(MathFunctions.PI - yaw);
         return new State2D(-x, y, angle, vx, -vy, -w);
     }
 
     @Override
-    public State2D symmetricAxisXY() {
+    public State2D symmetricPlaneXY() {
         return new State2D(this);
     }
 
@@ -224,7 +224,6 @@ public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
         return new State2D(this.x + move.x, this.y + move.y, this.yaw, this.vx, this.vy, this.w);
     }
 
-    @Override
     public State2D add(Point2D move) {
         return new State2D(this.x + move.x, this.y + move.y, this.yaw, this.vx, this.vy, this.w);
     }
@@ -241,7 +240,6 @@ public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
         return new State2D(this.x - move.x, this.y - move.y, this.yaw, this.vx, this.vy, this.w);
     }
 
-    @Override
     public State2D subtract(Point2D move) {
         return new State2D(this.x - move.x, this.y - move.y, this.yaw, this.vx, this.vy, this.w);
     }
@@ -269,7 +267,7 @@ public class State2D extends Pose2D implements Serializable, Geometry<State2D> {
     }
 
     @Override
-    public int symmetryAxis() {
+    public int symmetryPlane() {
         //obtain angle / (pi / 2) mod 2. If angleSymmetriAxis == 0 then Axis = X, else Axis = Y
         return Math.abs(Math.round( 2 * this.absoluteAngle() / MathFunctions.PI)) % 2;
     }

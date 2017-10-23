@@ -147,7 +147,7 @@ public class State2DTest extends Pose2DTest{
     @Repeat( times = EXECUTIONS)
     @Override
     public void test_symmetricAxisX(){
-        State2D result = state1.symmetricAxisXZ();
+        State2D result = state1.symmetricPlaneXZ();
         assertEquals("[symmetricAxisX] wrong x value", x1, result.x, ERR);
         assertEquals("[symmetricAxisX] wrong y value", -y1, result.y, ERR);
         assertEquals("[symmetricAxisX] wrong yaw value", -yaw1, result.yaw, ERR);
@@ -164,7 +164,7 @@ public class State2DTest extends Pose2DTest{
     @Repeat( times = EXECUTIONS)
     @Override
     public void test_symmetricAxisY(){
-        State2D result = state1.symmetricAxisYZ();
+        State2D result = state1.symmetricPlaneYZ();
         assertEquals("[symmetricAxisX] wrong x value", -x1, result.x, ERR);
         assertEquals("[symmetricAxisX] wrong y value", y1, result.y, ERR);
         assertEquals("[symmetricAxisX] wrong yaw value", MathFunctions.adjustAngleP(MathFunctions.PI - yaw1), result.yaw, ERR);
