@@ -158,8 +158,8 @@ public class Point2D implements Point, Serializable{
      * @param point reference point
      * @return scalar distance between them
      */
-    public float distance(Point2D point) {
-        return (float) FastMath.hypot(x - point.x, y - point.y);
+    public float distance(Point point) {
+        return (float) FastMath.hypot(x - point.getX(), y - point.getY());
     }
 
     /**

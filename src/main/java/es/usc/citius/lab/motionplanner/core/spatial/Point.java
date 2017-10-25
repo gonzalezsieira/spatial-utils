@@ -8,4 +8,6 @@ public interface Point {
 
     public float getZ();
 
+    public float distance(Point other);
+
 }

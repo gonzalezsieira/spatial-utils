@@ -103,6 +103,13 @@ public class Point3D implements Point, Serializable{
      * 					EQUALS/HASH-CODE METHODS
      ************************************************************************/
 
+    public float distance(Point point) {
+        float dx = this.x - point.getX();
+        float dy = this.y - point.getY();
+        float dz = this.z - point.getZ();
+        return (float) FastMath.sqrt(dx * dx + dy * dy + dz * dz );
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
