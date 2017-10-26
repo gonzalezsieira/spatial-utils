@@ -130,12 +130,12 @@ public class Point2DTest {
      */
     @Test
     @Repeat( times = EXECUTIONS)
-    public void test_absoluteAngle1P(){
+    public void test_yawTo(){
         //obtain angle to (0, 0)
-        float test = point1.absoluteAngle();
+        float test = Point2D.ZERO.yawTo(point1);
         //expected result
         float expected = (float) FastMath.atan2(y1, x1);
-        assertEquals("[absoluteAngle1P] wrong x value", expected, test, ERR);
+        assertEquals("[yawTo] wrong x value", expected, test, ERR);
     }
     
     /**
@@ -143,12 +143,38 @@ public class Point2DTest {
      */
     @Test
     @Repeat( times = EXECUTIONS)
-    public void test_absoluteAngle2P(){
+    public void test_yawToPoint(){
         //obtain angle to point2
-        float test = point1.absoluteAngleTo(point2);
+        float test = point1.yawTo(point2);
         //expected result
         float expected = (float) FastMath.atan2(y2 - y1, x2 - x1);
-        assertEquals("[absoluteAngle2P] wrong value", expected, test, ERR);
+        assertEquals("[yawToPoint] wrong value", expected, test, ERR);
+    }
+
+    /**
+     * Checks if the angle between two points is calculated properly.
+     */
+    @Test
+    @Repeat( times = EXECUTIONS)
+    public void test_pitchToPoint(){
+        //obtain angle to point2
+        float test = point1.pitchTo(point2);
+        //expected result
+        float expected = (float) 0;
+        assertEquals("[pitchTo] wrong value", expected, test, ERR);
+    }
+
+    /**
+     * Checks if the angle between two points is calculated properly.
+     */
+    @Test
+    @Repeat( times = EXECUTIONS)
+    public void test_rollToPoint(){
+        //obtain angle to point2
+        float test = point1.rollTo(point2);
+        //expected result
+        float expected = (float) 0;
+        assertEquals("[rollTo] wrong value", expected, test, ERR);
     }
     
     /**
@@ -157,16 +183,16 @@ public class Point2DTest {
      */
     @Test
     public void test_absoluteAngle1P_knownValues(){
-        assertEquals("Angle from (0, 0) to (1, 1) and must be PI/4", FastMath.PI/4, new Point2D(1, 1).absoluteAngle(), ERR);
-        assertEquals("Angle from (0, 0) to (2, 2) must be PI/4", FastMath.PI/4, new Point2D(2, 2).absoluteAngle(), ERR);
-        assertEquals("Angle from (0, 0) to (0, 1) must be PI/2", FastMath.PI/2, new Point2D(0, 1).absoluteAngle(), ERR);
-        assertEquals("Angle from (0, 0) to (0, 2) must be PI/2", FastMath.PI/2, new Point2D(0, 2).absoluteAngle(), ERR);
-        assertEquals("Angle from (0, 0) to (0, -1) must be -PI/2", -FastMath.PI/2, new Point2D(0, -1).absoluteAngle(), ERR);
-        assertEquals("Angle from (0, 0) to (0, -1) must be -PI/2", -FastMath.PI/2, new Point2D(0, -1).absoluteAngle(), ERR);
-        assertEquals("Angle from (0, 0) to (-1, -1) must be -3*PI/4", -3*FastMath.PI/4, new Point2D(-1, -1).absoluteAngle(), ERR);
-        assertEquals("Angle from (0, 0) to (1, -1) must be -PI/4", -FastMath.PI/4, new Point2D(1, -1).absoluteAngle(), ERR);
-        assertEquals("Angle from (0, 0) to (-1, 1) must be 3*PI/4", 3*FastMath.PI/4, new Point2D(-1, 1).absoluteAngle(), ERR);
-        assertEquals("Angle from (0, 0) to (-1, 0) must be PI", FastMath.PI, new Point2D(-1, 0).absoluteAngle(), ERR);
+        assertEquals("Angle from (0, 0) to (1, 1) and must be PI/4", FastMath.PI/4, Point2D.ZERO.yawTo(new Point2D(1, 1)), ERR);
+        assertEquals("Angle from (0, 0) to (2, 2) must be PI/4", FastMath.PI/4, Point2D.ZERO.yawTo(new Point2D(2, 2)), ERR);
+        assertEquals("Angle from (0, 0) to (0, 1) must be PI/2", FastMath.PI/2, Point2D.ZERO.yawTo(new Point2D(0, 1)), ERR);
+        assertEquals("Angle from (0, 0) to (0, 2) must be PI/2", FastMath.PI/2, Point2D.ZERO.yawTo(new Point2D(0, 2)), ERR);
+        assertEquals("Angle from (0, 0) to (0, -1) must be -PI/2", -FastMath.PI/2, Point2D.ZERO.yawTo(new Point2D(0, -1)), ERR);
+        assertEquals("Angle from (0, 0) to (0, -1) must be -PI/2", -FastMath.PI/2, Point2D.ZERO.yawTo(new Point2D(0, -1)), ERR);
+        assertEquals("Angle from (0, 0) to (-1, -1) must be -3*PI/4", -3*FastMath.PI/4, Point2D.ZERO.yawTo(new Point2D(-1, -1)), ERR);
+        assertEquals("Angle from (0, 0) to (1, -1) must be -PI/4", -FastMath.PI/4, Point2D.ZERO.yawTo(new Point2D(1, -1)), ERR);
+        assertEquals("Angle from (0, 0) to (-1, 1) must be 3*PI/4", 3*FastMath.PI/4, Point2D.ZERO.yawTo(new Point2D(-1, 1)), ERR);
+        assertEquals("Angle from (0, 0) to (-1, 0) must be PI", FastMath.PI, Point2D.ZERO.yawTo(new Point2D(-1, 0)), ERR);
     }
     
     /**
@@ -175,15 +201,15 @@ public class Point2DTest {
      */
     @Test
     public void test_absoluteAngle2P_knownValues(){
-        assertEquals("Angle from (1, 1) to (2, 2) must be PI/4", FastMath.PI/4, new Point2D(1, 1).absoluteAngleTo(new Point2D(2, 2)), ERR);
-        assertEquals("Angle from (2, 2) to (3, 3) must be PI/4", FastMath.PI/4, new Point2D(2, 2).absoluteAngleTo(new Point2D(3, 3)), ERR);
-        assertEquals("Angle from (3, 2) to (2, 2) must be -PI", FastMath.PI, new Point2D(3, 2).absoluteAngleTo(new Point2D(2, 2)), ERR);
-        assertEquals("Angle from (2, 2) to (3, 2) must be 0", 0, new Point2D(2, 2).absoluteAngleTo(new Point2D(3, 2)), ERR);
-        assertEquals("Angle from (2, 2) to (2, 3) must be PI/2", FastMath.PI/2, new Point2D(2, 2).absoluteAngleTo(new Point2D(2, 3)), ERR);
-        assertEquals("Angle from (2, 2) to (3, 1) must be -PI/4", -FastMath.PI/4, new Point2D(2, 2).absoluteAngleTo(new Point2D(3, 1)), ERR);
-        assertEquals("Angle from (1, 2) to (1, 1) must be -PI/2", -FastMath.PI/2, new Point2D(1, 2).absoluteAngleTo(new Point2D(1, 1)), ERR);
-        assertEquals("Angle from (4, 5) to (3, 4) must be -3*PI/4", -3*FastMath.PI/4, new Point2D(4, 5).absoluteAngleTo(new Point2D(3, 4)), ERR);
-        assertEquals("Angle from (4, 5) to (3, 6) must be 3*PI/4", 3*FastMath.PI/4, new Point2D(4, 5).absoluteAngleTo(new Point2D(3, 6)), ERR);
+        assertEquals("Angle from (1, 1) to (2, 2) must be PI/4", FastMath.PI/4, new Point2D(1, 1).yawTo(new Point2D(2, 2)), ERR);
+        assertEquals("Angle from (2, 2) to (3, 3) must be PI/4", FastMath.PI/4, new Point2D(2, 2).yawTo(new Point2D(3, 3)), ERR);
+        assertEquals("Angle from (3, 2) to (2, 2) must be -PI", FastMath.PI, new Point2D(3, 2).yawTo(new Point2D(2, 2)), ERR);
+        assertEquals("Angle from (2, 2) to (3, 2) must be 0", 0, new Point2D(2, 2).yawTo(new Point2D(3, 2)), ERR);
+        assertEquals("Angle from (2, 2) to (2, 3) must be PI/2", FastMath.PI/2, new Point2D(2, 2).yawTo(new Point2D(2, 3)), ERR);
+        assertEquals("Angle from (2, 2) to (3, 1) must be -PI/4", -FastMath.PI/4, new Point2D(2, 2).yawTo(new Point2D(3, 1)), ERR);
+        assertEquals("Angle from (1, 2) to (1, 1) must be -PI/2", -FastMath.PI/2, new Point2D(1, 2).yawTo(new Point2D(1, 1)), ERR);
+        assertEquals("Angle from (4, 5) to (3, 4) must be -3*PI/4", -3*FastMath.PI/4, new Point2D(4, 5).yawTo(new Point2D(3, 4)), ERR);
+        assertEquals("Angle from (4, 5) to (3, 6) must be 3*PI/4", 3*FastMath.PI/4, new Point2D(4, 5).yawTo(new Point2D(3, 6)), ERR);
     }
     
     /**
@@ -271,7 +297,7 @@ public class Point2DTest {
         //check the angle of the lines point -> projection and point -> point2 to be 90º
         assertEquals("[projection] angle between projected point", 
                 FastMath.PI / 2, 
-                FastMath.abs(MathFunctions.errorBetweenAngles(result.absoluteAngleTo(point1), result.absoluteAngleTo(point))), 0.03);
+                FastMath.abs(MathFunctions.errorBetweenAngles(result.yawTo(point1), result.yawTo(point))), 0.03);
     }*/
     
     /**

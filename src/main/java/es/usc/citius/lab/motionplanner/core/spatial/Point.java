@@ -42,4 +42,28 @@ public interface Point {
      */
     public void staticSubtract(Point move);
 
+    /**
+     * Measures the angle around Z axis (yaw) between two 3D points.
+     *
+     * @param point
+     * @return yaw
+     */
+    public float yawTo(Point point);
+
+    /**
+     * Measures the angle around Y (pitch) between two 3D points.
+     *
+     * @param point
+     * @return pitch
+     */
+    public float pitchTo(Point point);
+
+    /**
+     * Measures the angle around X (roll) between two 3D points.
+     *
+     * @param point
+     * @return roll
+     */
+    public float rollTo(Point point);
+
 }

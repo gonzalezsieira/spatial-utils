@@ -70,7 +70,7 @@ public class ShapeSquare2DTest {
             assertEquals(current.distance(Point2D.ZERO), distance, ERR);
             //test angle
             //angle of the current corner
-            double currentAngle = current.absoluteAngle();
+            double currentAngle = Point2D.ZERO.yawTo(current);
             boolean found = false;
             //check if the angle is in the list of angles of the corners
             for(double listAngle : angles){

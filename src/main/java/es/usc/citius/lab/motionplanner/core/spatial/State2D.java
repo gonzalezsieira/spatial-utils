@@ -261,7 +261,7 @@ public class State2D extends Pose2D implements Serializable, State {
     @Override
     public int symmetryPlane() {
         //obtain angle / (pi / 2) mod 2. If angleSymmetriAxis == 0 then Axis = X, else Axis = Y
-        return Math.abs(Math.round( 2 * this.absoluteAngle() / MathFunctions.PI)) % 2;
+        return Math.abs(Math.round( 2 * yawTo(Point2D.ZERO) / MathFunctions.PI)) % 2;
     }
 
     @Override

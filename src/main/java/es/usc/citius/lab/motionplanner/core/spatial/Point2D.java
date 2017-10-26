@@ -131,15 +131,6 @@ public class Point2D implements Point, Serializable{
      * GEOMETRIC OPERATION METHODS
      * **********************************************************************
      */
-    /**
-     * Obtains the absolute angle between this point and the origin:
-     * {@code atan2(y, x)}
-     *
-     * @return absolute angle in the interval (-PI, PI]
-     */
-    public float absoluteAngle() {
-        return MathFunctions.adjustAngleP((float) FastMath.atan2(y, x));
-    }
 
     /**
      * Obtains the absolute angle between this point and other point acting as
@@ -148,8 +139,19 @@ public class Point2D implements Point, Serializable{
      * @param point other instance of {@link Point2D}
      * @return absolute angle in the interval (-PI, PI]
      */
-    public float absoluteAngleTo(Point2D point) {
-        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.y - y, point.x - x));
+    @Override
+    public float yawTo(Point point) {
+        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.getY() - y, point.getX() - x));
+    }
+
+    @Override
+    public float pitchTo(Point point) {
+        return 0;
+    }
+
+    @Override
+    public float rollTo(Point point) {
+        return 0;
     }
 
     /**

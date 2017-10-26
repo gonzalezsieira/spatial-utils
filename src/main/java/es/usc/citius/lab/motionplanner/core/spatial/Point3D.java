@@ -145,26 +145,18 @@ public class Point3D implements Point, Serializable{
         return true;
     }
 
-    /**
-     * Measures the angle around Z axis (yaw) between two 3D points.
-     *
-     * @param point
-     * @return yaw
-     */
-    public float yawTo(Point3D point){
-        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.y - y, point.x - x));
+    public float yawTo(Point point){
+        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.getY() - y, point.getX() - x));
     }
 
-    /**
-     * Measures the angle around Y (pitch) between two 3D points.
-     *
-     * @param point
-     * @return pitch
-     */
-    public float pitchTo(Point3D point){
-        float dx = point.x - x;
-        float dy = point.y - y;
-        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.z - z, FastMath.sqrt(dx * dx + dy * dy)));
+    public float pitchTo(Point point){
+        float dx = point.getX() - x;
+        float dy = point.getY() - y;
+        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.getZ() - z, FastMath.sqrt(dx * dx + dy * dy)));
+    }
+
+    public float rollTo(Point point){
+        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.getY() - y, point.getZ() - z));
     }
 
     /**
@@ -179,16 +171,6 @@ public class Point3D implements Point, Serializable{
                 MathFunctions.adjustAngleP((float) FastMath.atan2(dy, dx)),
                 MathFunctions.adjustAngleP((float) FastMath.atan2(dz, FastMath.sqrt(dx * dx + dy * dy)))
         );
-    }
-
-    /**
-     * Measures the angle around X (roll) between two 3D points.
-     *
-     * @param point
-     * @return roll
-     */
-    public float rollTo(Point3D point){
-        return MathFunctions.adjustAngleP((float) FastMath.atan2(point.y - y, point.z - z));
     }
 
     /**
