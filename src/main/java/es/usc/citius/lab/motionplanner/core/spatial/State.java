@@ -23,15 +23,8 @@ public interface State extends Pose{
      * @param move coordinates to add (3D)
      * @return state resulting of the addition operation
      */
+    @Override
     public State add(Point move);
-
-    /**
-     * Obtains the state adding the X, Y, Z values of the state and the given point. Does not create
-     * a new instance, it modifies the given one instead.
-     *
-     * @param move coordinates to add (3D)
-     */
-    public void staticAdd(Point move);
 
     /**
      * Obtains the state subtracting the X, Y, Z values of the state and the given point.
@@ -39,15 +32,8 @@ public interface State extends Pose{
      * @param move coordinates to subtract (3D)
      * @return state resulting of the subtraction operation
      */
+    @Override
     public State subtract(Point move);
-
-    /**
-     * Obtains the state subtracting the X, Y, Z values of the state and the given point. Does not create
-     * a new instance, it modifies the given one instead.
-     *
-     * @param move coordinates to subtract (3D)
-     */
-    public void staticSubtract(Point move);
 
     /**
      * Rotates the position and heading of the state keeping the velocities.
