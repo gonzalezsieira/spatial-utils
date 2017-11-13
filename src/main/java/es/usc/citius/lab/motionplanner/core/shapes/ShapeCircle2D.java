@@ -15,9 +15,7 @@
  */
 package es.usc.citius.lab.motionplanner.core.shapes;
 
-import es.usc.citius.lab.motionplanner.core.spatial.Point2D;
-import es.usc.citius.lab.motionplanner.core.spatial.Pose2D;
-import es.usc.citius.lab.motionplanner.core.spatial.Vector2D;
+import es.usc.citius.lab.motionplanner.core.spatial.*;
 
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.math3.util.FastMath;
@@ -73,12 +71,12 @@ public final class ShapeCircle2D extends Shape2D {
     }
 
     @Override
-    public float borderDistanceAtRelativeAngle(float angle) {
+    public float borderDistanceAtRelativeAngle(float yaw) {
         return radius;
     }
 
     @Override
-    public Point2D[] vertexAt(Pose2D pose) {
+    public Point2D[] vertexAt(Pose pose) {
         return new Point2D[]{
                 new Point2D(pose.getX() + radius, pose.getY()),
                 new Point2D(pose.getX() - radius, pose.getY()),
@@ -98,13 +96,13 @@ public final class ShapeCircle2D extends Shape2D {
     }
 
     @Override
-    public double[][] distanceVectorToPoint(Pose2D robotPose, Point2D point, float angle) {
+    public double[][] distanceVectorToPoint(Pose robotPose, Point point, float angle) {
         Point2D border = borderPointAtRelativeAngle(angle);
         return new double[][]{{point.getX() - border.getX()}, {point.getY() - border.getY()}};
     }
 
     @Override
-    public Vector2D[] axisAt(Pose2D pose) {
+    public Vector2D[] axisAt(Pose pose) {
         return new Vector2D[]{
             Vector2D.X,
             Vector2D.Y

@@ -15,15 +15,12 @@
  */
 package es.usc.citius.lab.motionplanner.core.shapes;
 
-import es.usc.citius.lab.motionplanner.core.spatial.Point2D;
+import es.usc.citius.lab.motionplanner.core.spatial.*;
 
 import java.util.*;
 
-import es.usc.citius.lab.motionplanner.core.spatial.Vector2D;
 import org.apache.commons.math3.util.FastMath;
 
-import es.usc.citius.lab.motionplanner.core.spatial.Pose2D;
-import es.usc.citius.lab.motionplanner.core.spatial.SpatialFunctions;
 import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import es.usc.citius.lab.motionplanner.core.util.Pair;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -126,20 +123,23 @@ public final class ShapeSquare2D extends Shape2D {
      * @return list of {@link Point2D} with the corners of the shape when it is centered in the given pose
      */
     @Override
-    public Point2D[] vertexAt(Pose2D pose) {
+    public Point2D[] vertexAt(Pose pose) {
+        float x = pose.getX();
+        float y = pose.getY();
+        float yaw = pose.getYaw();
         //pre-calculated values for effiency
-        float cos = (float) FastMath.cos(pose.yaw);
-        float sin = (float) FastMath.sin(pose.yaw);
+        float cos = (float) FastMath.cos(yaw);
+        float sin = (float) FastMath.sin(yaw);
         float halfDimXDotCos = halfDimX * cos;
         float halfDimYDotCos = halfDimY * cos;
         float halfDimXDotSin = halfDimX * sin;
         float halfDimYDotSin = halfDimY * sin;
         //calculate corners of a squared shape, first rotated and then added according to the pose information
         return new Point2D[]{
-                new Point2D(pose.x + halfDimXDotCos + halfDimYDotSin, pose.y + halfDimXDotSin - halfDimYDotCos),
-                new Point2D(pose.x + halfDimXDotCos - halfDimYDotSin, pose.y + halfDimXDotSin + halfDimYDotCos),
-                new Point2D(pose.x - halfDimXDotCos - halfDimYDotSin, pose.y - halfDimXDotSin + halfDimYDotCos),
-                new Point2D(pose.x - halfDimXDotCos + halfDimYDotSin, pose.y - halfDimXDotSin - halfDimYDotCos)
+                new Point2D(x + halfDimXDotCos + halfDimYDotSin, y + halfDimXDotSin - halfDimYDotCos),
+                new Point2D(x + halfDimXDotCos - halfDimYDotSin, y + halfDimXDotSin + halfDimYDotCos),
+                new Point2D(x - halfDimXDotCos - halfDimYDotSin, y - halfDimXDotSin + halfDimYDotCos),
+                new Point2D(x - halfDimXDotCos + halfDimYDotSin, y - halfDimXDotSin - halfDimYDotCos)
         };
     }
     
@@ -152,8 +152,9 @@ public final class ShapeSquare2D extends Shape2D {
      * @param angle relative orientation to the heading to retrieve the side (in radians)
      * @return straight line of the side of the robot correspondent to the angle, rotated to match the robot pose
      */
-    public Pair<Point2D, Point2D> sideOfAngle(Pose2D pose, float angle){
-    	//begin and end are selected depending on the relative angle to the heading of the robot,
+    public Pair<Point2D, Point2D> sideOfAngle(Pose pose, float angle){
+    	float yaw = pose.getYaw();
+        //begin and end are selected depending on the relative angle to the heading of the robot,
     	//because they are the points of the corners that define the segment of the robot side
         Point2D p1, p2;
         //front side
@@ -179,8 +180,8 @@ public final class ShapeSquare2D extends Shape2D {
 
         //now the points are rotated to make the sides of the robot match with the heading
         //in global coordinates
-        p1.staticRotate(pose.yaw, 0f, 0f);
-        p2.staticRotate(pose.yaw, 0f, 0f);
+        p1.staticRotate(yaw, 0f, 0f);
+        p2.staticRotate(yaw, 0f, 0f);
         p1.staticAdd(pose);
         p2.staticAdd(pose);
         //now the straight line is built
@@ -188,11 +189,11 @@ public final class ShapeSquare2D extends Shape2D {
     }
     
     @Override
-    public double[][] distanceVectorToPoint(Pose2D robotPose, Point2D point, float angle){
+    public double[][] distanceVectorToPoint(Pose robotPose, Point point, float angle){
         //select side of the robot depending on the relative angle
         Pair<Point2D, Point2D> side = sideOfAngle(robotPose, angle);
         //project point over the straight line defined by the segment
-        Point2D pointProjectedOverSide = point.projectOverSegment(side.getKey(), side.getContent());
+        Point2D pointProjectedOverSide = new Point2D(point.getX(), point.getY()).projectOverSegment(side.getKey(), side.getContent());
         //return the distance vector to the point, where the origin is the projection
         return new double[][]{{point.getX() - pointProjectedOverSide.getX()}, {point.getY() - pointProjectedOverSide.getY()}};
     }
@@ -211,8 +212,8 @@ public final class ShapeSquare2D extends Shape2D {
     }
 
     @Override
-    public float borderDistanceAtRelativeAngle(float angle) {
-        return distancesByAngle.get(roundDegrees(angle));
+    public float borderDistanceAtRelativeAngle(float yaw) {
+        return distancesByAngle.get(roundDegrees(yaw));
     }
     
     /**
@@ -236,10 +237,11 @@ public final class ShapeSquare2D extends Shape2D {
     }
 
     @Override
-    public Vector2D[] axisAt(Pose2D pose) {
+    public Vector2D[] axisAt(Pose pose) {
+        float yaw = pose.getYaw();
         //pre-calculated values for effiency
-        float cos = (float) FastMath.cos(pose.yaw);
-        float sin = (float) FastMath.sin(pose.yaw);
+        float cos = (float) FastMath.cos(yaw);
+        float sin = (float) FastMath.sin(yaw);
         return new Vector2D[]{
                 new Vector2D(halfDimX * cos, halfDimX * sin),
                 new Vector2D(-halfDimY * sin, halfDimY * cos)

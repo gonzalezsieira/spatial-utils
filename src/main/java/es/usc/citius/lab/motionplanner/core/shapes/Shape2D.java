@@ -15,10 +15,8 @@
  */
 package es.usc.citius.lab.motionplanner.core.shapes;
 
-import es.usc.citius.lab.motionplanner.core.spatial.Point2D;
-import es.usc.citius.lab.motionplanner.core.spatial.Pose2D;
-
-import es.usc.citius.lab.motionplanner.core.spatial.Vector2D;
+import es.usc.citius.lab.motionplanner.core.spatial.*;
+import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 
 /**
  * This class defines a main methods to interact with a definition of 
@@ -44,20 +42,20 @@ public abstract class Shape2D extends Shape{
     /**
      * Retrieves the distance between the border of the shape  of the border
      * 
-     * @param angle relative orientation from heading
+     * @param yaw relative orientation from heading
      * @return distance between the rotation center and the border at the given orientation
      */
-    public abstract float borderDistanceAtRelativeAngle(float angle);
+    public abstract float borderDistanceAtRelativeAngle(float yaw);
 
     /**
      * Retuns an interable set with the vertex of the shape,
      * given the pose of the rotation center.
-     * 
+     *
      * @param pose of the rotation center of the shape
-     * 
+     *
      * @return iterable set of vertex
      */
-    public abstract Point2D[] vertexAt(Pose2D pose);
+    public abstract Point2D[] vertexAt(Pose pose);
 
     /**
      * Retuns an interable set with the axis of the shape,
@@ -67,21 +65,19 @@ public abstract class Shape2D extends Shape{
      *
      * @return iterable set of axis
      */
-    public abstract Vector2D[] axisAt(Pose2D pose);
-    
+    public abstract Vector2D[] axisAt(Pose pose);
+
     /**
      * Calculates the distance vector between the border of the shape 
      * and the point given as argument; this method calls
-     * {@link #distanceVectorToPoint(Pose2D, Point2D, float) }, passing
-     * as third argument the value returned by 
-     * {@link Pose2D#relativeYawTo(Point2D) }.
+     * {@link #distanceVectorToPoint(Pose, Point, float) }.
      * 
      * @param robotPose current robot pose
      * @param point point in the map
      * @return column vector distance to the point where the origin is the robot pose: [dx; dy]
      */
-    public double[][] distanceVectorToPoint(Pose2D robotPose, Point2D point){
-        return distanceVectorToPoint(robotPose, point, robotPose.relativeYawTo(point));
+    public double[][] distanceVectorToPoint(Pose robotPose, Point point){
+        return distanceVectorToPoint(robotPose, point, MathFunctions.adjustAngleP(robotPose.yawTo(point) - robotPose.getYaw()));
     }
     
     /**
@@ -90,9 +86,9 @@ public abstract class Shape2D extends Shape{
      * 
      * @param robotPose current robot pose
      * @param point point in the map
-     * @param angle value given by {@link Pose2D#relativeYawTo(es.usc.citius.lab.motionplanner.core.spatial.Point2D) }
+     * @param angle difference of angles between heading and {@link Point#yawTo(Point)}  }
      * @return column vector distance to the point where the origin is the robot pose: [dx; dy]
      */
-    public abstract double[][] distanceVectorToPoint(Pose2D robotPose, Point2D point, float angle);
+    public abstract double[][] distanceVectorToPoint(Pose robotPose, Point point, float angle);
 
 }
