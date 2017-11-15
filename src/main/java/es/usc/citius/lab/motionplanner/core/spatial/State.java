@@ -1,5 +1,7 @@
 package es.usc.citius.lab.motionplanner.core.spatial;
 
+import org.ejml.data.DenseMatrix64F;
+
 public interface State extends Pose{
 
     /**
@@ -73,5 +75,10 @@ public interface State extends Pose{
     public float getVpitch();
 
     public float getVyaw();
+
+    /**
+     * @return a matrix with the information of the state.
+     */
+    public DenseMatrix64F getMatrix();
 
 }
