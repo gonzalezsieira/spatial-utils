@@ -85,5 +85,10 @@ public class Vector3D extends Point3D implements Serializable{
     public float dotProduct(float x, float y, float z){
         return this.x*x + this.y*y + this.z*z;
     }
-    
+
+    @Override
+    public Vector3D rotate(float yaw, float pitch, float roll) {
+        float[] rotated = rotateXYZCoordinates(this.x, this.y, this.z, yaw, pitch, roll);
+        return new Vector3D(rotated[0], rotated[1], rotated[2]);
+    }
 }
