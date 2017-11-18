@@ -146,4 +146,25 @@ public class Pose3D extends Point3D implements Pose, Serializable{
         return new Pose3D(this.x - move.getX(), this.y - move.getY(), this.z - move.getZ(), this.yaw, this.pitch, this.roll);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Pose3D pose3D = (Pose3D) o;
+
+        if (Math.round(yaw * PRECISION) != Math.round(pose3D.yaw * PRECISION)) return false;
+        if (Math.round(pitch * PRECISION) != Math.round(pose3D.pitch * PRECISION)) return false;
+        return Math.round(roll * PRECISION) == Math.round(pose3D.roll * PRECISION);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Math.round(yaw * PRECISION);
+        result = 31 * result + Math.round(pitch * PRECISION);
+        result = 31 * result + Math.round(roll * PRECISION);
+        return result;
+    }
 }

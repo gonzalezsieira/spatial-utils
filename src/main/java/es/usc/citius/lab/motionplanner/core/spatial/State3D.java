@@ -176,4 +176,32 @@ public class State3D extends Pose3D implements Serializable, State {
     public String toString() {
         return "([x=" + x + ", y=" + y + ", z=" + z + ", yaw=" + yaw + "], vx=" + vx + ", vy=" + vy + ", vz=" + vz + ", vyaw=" + vyaw + ")";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        State3D state3D = (State3D) o;
+
+        if (Math.round(vx * PRECISION) != Math.round(state3D.vx * PRECISION)) return false;
+        if (Math.round(vy * PRECISION) != Math.round(state3D.vy * PRECISION)) return false;
+        if (Math.round(vz * PRECISION) != Math.round(state3D.vz * PRECISION)) return false;
+        if (Math.round(vyaw * PRECISION) != Math.round(state3D.vyaw * PRECISION)) return false;
+        if (Math.round(vpitch * PRECISION) != Math.round(state3D.vpitch * PRECISION)) return false;
+        return (Math.round(vroll * PRECISION) == Math.round(state3D.vroll * PRECISION));
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Math.round(vx * PRECISION);
+        result = 31 * result + Math.round(vy * PRECISION);
+        result = 31 * result + Math.round(vz * PRECISION);
+        result = 31 * result + Math.round(vyaw * PRECISION);
+        result = 31 * result + Math.round(vpitch * PRECISION);
+        result = 31 * result + Math.round(vroll * PRECISION);
+        return result;
+    }
 }

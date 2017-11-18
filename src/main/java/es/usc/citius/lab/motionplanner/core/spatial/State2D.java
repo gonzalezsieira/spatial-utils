@@ -121,9 +121,9 @@ public class State2D extends Pose2D implements Serializable, State {
     public int hashCode() {
         int prime = 31;
         int result = super.hashCode();
-        result = prime * result + Math.round(vx * 1E+4f);
-        result = prime * result + Math.round(vy * 1E+4f);
-        result = prime * result + Math.round(w * 1E+4f);
+        result = prime * result + Math.round(vx * PRECISION);
+        result = prime * result + Math.round(vy * PRECISION);
+        result = prime * result + Math.round(w * PRECISION);
         return result;
     }
 
@@ -136,13 +136,13 @@ public class State2D extends Pose2D implements Serializable, State {
             return false;
         }
         final State2D other = (State2D) obj;
-        if (Math.abs(vx - other.vx) > 1E-4f) {
+        if (Math.round(vx * PRECISION) != Math.round(other.vx * PRECISION)) {
             return false;
         }
-        if (Math.abs(vy - other.vy) > 1E-4f) {
+        if (Math.round(vy * PRECISION) != Math.round(other.vy * PRECISION)) {
             return false;
         }
-        if (Math.abs(w - other.w) > 1E-4f) {
+        if (Math.round(w * PRECISION) != Math.round(other.w * PRECISION)) {
             return false;
         }
         if (!super.equals(obj))

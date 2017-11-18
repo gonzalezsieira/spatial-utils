@@ -139,10 +139,7 @@ public class Point3D implements Point, Serializable{
         if (Math.round(y * PRECISION) != Math.round(other.y * PRECISION)) {
             return false;
         }
-        if (Math.round(z * PRECISION) != Math.round(other.z * PRECISION)) {
-            return false;
-        }
-        return true;
+        return Math.round(z * PRECISION) == Math.round(other.z * PRECISION);
     }
 
     public float yawTo(Point point){
