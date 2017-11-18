@@ -171,4 +171,9 @@ public class State3D extends Pose3D implements Serializable, State {
         //obtain angle / (pi / 2) mod 2. If angleSymmetriAxis == 0 then Axis = X, else Axis = Y
         return Math.abs(Math.round( 2 * this.yawTo(Point3D.ZERO) / MathFunctions.PI)) % 2;
     }
+
+    @Override
+    public String toString() {
+        return "([x=" + x + ", y=" + y + ", z=" + z + ", yaw=" + yaw + "], vx=" + vx + ", vy=" + vy + ", vz=" + vz + ", vyaw=" + vyaw + ")";
+    }
 }
