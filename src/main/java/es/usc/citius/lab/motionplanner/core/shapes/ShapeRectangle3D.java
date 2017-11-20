@@ -29,7 +29,16 @@ public class ShapeRectangle3D extends Shape3D{
     private static final String SUBID_DIMZ = SUBID_PARAM + ".dimZ";
 
     /**
-     * Create a new cuboid shape.
+     * Initializes the cuboid shape from a configuration file.
+     *
+     * @param config {@link HierarchicalConfiguration}.
+     */
+    public ShapeRectangle3D(HierarchicalConfiguration config){
+        super(config);
+    }
+
+    /**
+     * Create a new cuboid shape. The rotation center is in the middle of the shape.
      *
      * @param dimX lenght (from back to front)
      * @param dimY width (from side to side)

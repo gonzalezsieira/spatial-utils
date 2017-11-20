@@ -16,6 +16,7 @@
 package es.usc.citius.lab.motionplanner.core.shapes;
 
 import es.usc.citius.lab.motionplanner.core.spatial.*;
+import org.apache.commons.configuration.HierarchicalConfiguration;
 
 /**
  *
@@ -27,6 +28,22 @@ public abstract class Shape3D extends Shape {
     protected static final String SUBID_CLASS = "class";
     protected static final String SUBID_PARAM = "parameters";
     private static final long serialVersionUID = 20170823L;
+
+    /**
+     * Empty constructor.
+     */
+    protected Shape3D(){
+        //empty constructor
+    }
+
+    /**
+     * Initializes the shape from a {@link HierarchicalConfiguration} file.
+     *
+     * @param config configuration
+     */
+    protected Shape3D(HierarchicalConfiguration config){
+        loadConfig(config);
+    }
 
     /**
      * Retrieves the position of the border of this shape in a relative

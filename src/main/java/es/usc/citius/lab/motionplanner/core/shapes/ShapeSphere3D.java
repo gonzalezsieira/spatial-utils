@@ -37,7 +37,17 @@ public class ShapeSphere3D extends Shape3D{
      * @param radius distance from the center to the limit of the sphere
      */
     public ShapeSphere3D(float radius){
+        super();
         this.radius = radius;
+    }
+
+    /**
+     * Inializes the sphere from a configuration file.
+     *
+     * @param config {@link HierarchicalConfiguration}
+     */
+    public ShapeSphere3D(HierarchicalConfiguration config){
+        super(config);
     }
 
     @Override

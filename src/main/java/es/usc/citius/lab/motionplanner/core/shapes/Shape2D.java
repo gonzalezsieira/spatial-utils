@@ -17,6 +17,7 @@ package es.usc.citius.lab.motionplanner.core.shapes;
 
 import es.usc.citius.lab.motionplanner.core.spatial.*;
 import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
+import org.apache.commons.configuration.HierarchicalConfiguration;
 
 /**
  * This class defines a main methods to interact with a definition of 
@@ -29,6 +30,22 @@ import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 public abstract class Shape2D extends Shape{
 
     private static final long serialVersionUID = 201507171L;
+
+    /**
+     * Empty constructor.
+     */
+    protected Shape2D(){
+        //empty constructor
+    }
+
+    /**
+     * Initializes the shape from a {@link HierarchicalConfiguration} file.
+     *
+     * @param config
+     */
+    protected Shape2D(HierarchicalConfiguration config){
+        loadConfig(config);
+    }
 
     /**
      * Retrieves the position of the border of this shape in a relative

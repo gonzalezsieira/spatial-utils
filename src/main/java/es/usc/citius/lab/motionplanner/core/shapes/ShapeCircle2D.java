@@ -38,6 +38,7 @@ public final class ShapeCircle2D extends Shape2D {
      * @param radius distance from the center to the limit of the circle
      */
     public ShapeCircle2D(float radius) {
+        super();
         this.radius = radius;
     }
 
@@ -48,7 +49,7 @@ public final class ShapeCircle2D extends Shape2D {
      * @param config information of the {@code <shape>...</shape>} in XML format
      */
     public ShapeCircle2D(HierarchicalConfiguration config){
-        loadConfig(config);
+        super(config);
     }
     
     @Override

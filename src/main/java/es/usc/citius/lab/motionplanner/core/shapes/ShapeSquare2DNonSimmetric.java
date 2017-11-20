@@ -47,8 +47,28 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
     private float optimisticRadius;
     private float pessimisticRadius;
 
+    /**
+     * Initializes the squared shape based on the dimensions from its rotation center.
+     *
+     * @param negativeX length of the back side
+     * @param negativeY length of the right side
+     * @param positiveX length of the left side
+     * @param positiveY length of the front side
+     */
+    public ShapeSquare2DNonSimmetric(float negativeX, float negativeY, float positiveX, float positiveY){
+        this.negativeX = negativeX;
+        this.negativeY = negativeY;
+        this.positiveX = positiveX;
+        this.positiveY = positiveY;
+    }
+
+    /**
+     * Initializes the rectangular shape based on its dimensions from the rotation center.
+     *
+     * @param config configuration of the shape
+     */
     public ShapeSquare2DNonSimmetric(HierarchicalConfiguration config) {
-        loadConfig(config);
+        super(config);
         initialize();
     }
 

@@ -53,6 +53,7 @@ public final class ShapeSquare2D extends Shape2D {
      * @param dimY maximum lenght of the shape in the Y axis
      */
     public ShapeSquare2D(float dimX, float dimY) {
+        super();
         //assign the dimensions
         this.halfDimX = dimX / 2;
         this.halfDimY = dimY / 2;
@@ -66,7 +67,7 @@ public final class ShapeSquare2D extends Shape2D {
      * @param config information of the {@code <shape>...</shape>} in XML format
      */
     public ShapeSquare2D(HierarchicalConfiguration config){
-        loadConfig(config);
+        super(config);
         initialize();
     }
 
