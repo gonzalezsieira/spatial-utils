@@ -249,6 +249,7 @@ public class Point2D implements Point, Serializable{
      *
      * @param yaw rotation angle
      */
+    @Override
     public Point2D rotate(float yaw, float pitch, float roll){
         float[] rotation = rotateXYCoordinates(x, y, yaw);
         return new Point2D(rotation[0], rotation[1]);

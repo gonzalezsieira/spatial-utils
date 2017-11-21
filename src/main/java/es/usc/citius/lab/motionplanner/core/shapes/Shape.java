@@ -15,6 +15,9 @@
  */
 package es.usc.citius.lab.motionplanner.core.shapes;
 
+import es.usc.citius.lab.motionplanner.core.spatial.Point;
+import es.usc.citius.lab.motionplanner.core.spatial.Pose;
+import es.usc.citius.lab.motionplanner.core.spatial.Vector;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 
 import java.io.Serializable;
@@ -31,6 +34,25 @@ public abstract class Shape implements Serializable {
     protected static final String SUBID_PARAM = "parameters";
     private static final long serialVersionUID = 20170822L;
 
+    /**
+     * Retuns an interable set with the vertex of the shape,
+     * given the pose of the rotation center.
+     *
+     * @param pose of the rotation center of the shape
+     *
+     * @return iterable set of vertex
+     */
+    public abstract Vector[] axisAt(Pose pose);
+
+    /**
+     * Retuns an interable set with the axis of the shape,
+     * given the pose of the rotation center.
+     *
+     * @param pose of the rotation center of the shape
+     *
+     * @return iterable set of axis
+     */
+    public abstract Point[] vertexAt(Pose pose);
 
     /**
      * Retrieves the optimistic radius of the robot shape.

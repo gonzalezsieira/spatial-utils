@@ -15,7 +15,11 @@
  */
 package es.usc.citius.lab.motionplanner.core.spatial;
 
+import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
+import org.apache.commons.math3.util.FastMath;
+
 import java.io.Serializable;
+import static es.usc.citius.lab.motionplanner.core.spatial.Point3D.rotateXYZCoordinates;
 
 /**
  * Defines a 3D vector. A vector can be instantiated from two points, from
@@ -23,12 +27,15 @@ import java.io.Serializable;
  *
  * @author Adrián González Sieira <adrian.gonzalez@usc.es>
  */
-public class Vector3D extends Point3D implements Serializable{
+public class Vector3D implements Vector, Serializable{
 
     private static final long serialVersionUID = 20140710L;
     public static final Vector3D X = new Vector3D(1f, 0f, 0f);
     public static final Vector3D Y = new Vector3D(0f, 1f, 0f);
     public static final Vector3D Z = new Vector3D(0f, 0f, 1f);
+    public float x;
+    public float y;
+    public float z;
     
     /**
      * Creates a vector [x, y, z] given its three elements.
@@ -38,16 +45,9 @@ public class Vector3D extends Point3D implements Serializable{
      * @param z third element
      */
     public Vector3D(float x, float y, float z) {
-        super(x, y, z);
-    }
-
-    /**
-     * Creates a copy of a given vector.
-     *
-     * @param vector original
-     */
-    public Vector3D(Vector3D vector) {
-        super(vector.x, vector.y, vector.z);
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     /**
@@ -57,7 +57,9 @@ public class Vector3D extends Point3D implements Serializable{
      * @param p2 destination
      */
     public Vector3D(Point3D p1, Point3D p2) {
-        super(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
+        this.x = p2.x - p1.x;
+        this.y = p2.y - p1.y;
+        this.z = p2.z - p1.z;
     }
     
     /**
@@ -67,8 +69,8 @@ public class Vector3D extends Point3D implements Serializable{
      * @param other other point
      * @return dot product result
      */
-    public float dotProduct(Vector3D other){
-        return x*other.x + y*other.y + z*other.z;
+    public float dotProduct(Vector other){
+        return x*other.getX() + y*other.getY() + z*other.getZ();
     }
     
     /**
@@ -90,5 +92,32 @@ public class Vector3D extends Point3D implements Serializable{
     public Vector3D rotate(float yaw, float pitch, float roll) {
         float[] rotated = rotateXYZCoordinates(this.x, this.y, this.z, yaw, pitch, roll);
         return new Vector3D(rotated[0], rotated[1], rotated[2]);
+    }
+
+    @Override
+    public void normalize(){
+        float value = x * x + y * y + z * z;
+        //avoids normalizing vectors when they are already unitary
+        if(FastMath.abs(value) > 1.01f){
+            float invLength = MathFunctions.fastInverseSquareRootFloat(value);
+            this.x = x * invLength;
+            this.y = y * invLength;
+            this.z = z * invLength;
+        }
+    }
+
+    @Override
+    public float getX() {
+        return x;
+    }
+
+    @Override
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public float getZ() {
+        return z;
     }
 }

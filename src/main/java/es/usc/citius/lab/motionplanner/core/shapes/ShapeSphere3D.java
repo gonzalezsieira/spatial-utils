@@ -16,6 +16,7 @@
 package es.usc.citius.lab.motionplanner.core.shapes;
 
 import es.usc.citius.lab.motionplanner.core.spatial.Point3D;
+import es.usc.citius.lab.motionplanner.core.spatial.Pose;
 import es.usc.citius.lab.motionplanner.core.spatial.Pose3D;
 import es.usc.citius.lab.motionplanner.core.spatial.Vector3D;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -65,19 +66,19 @@ public class ShapeSphere3D extends Shape3D{
     }
 
     @Override
-    public Point3D[] vertexAt(Pose3D pose) {
+    public Point3D[] vertexAt(Pose pose) {
         return new Point3D[]{
-                new Point3D(pose.x + radius, pose.y, pose.z),
-                new Point3D(pose.x - radius, pose.y, pose.z),
-                new Point3D(pose.x, pose.y + radius, pose.z),
-                new Point3D(pose.x, pose.y - radius, pose.z),
-                new Point3D(pose.x, pose.y, pose.z + radius),
-                new Point3D(pose.x, pose.y, pose.z - radius)
+                new Point3D(pose.getX() + radius, pose.getY(), pose.getZ()),
+                new Point3D(pose.getX() - radius, pose.getY(), pose.getZ()),
+                new Point3D(pose.getX(), pose.getY() + radius, pose.getZ()),
+                new Point3D(pose.getX(), pose.getY() - radius, pose.getZ()),
+                new Point3D(pose.getX(), pose.getY(), pose.getZ() + radius),
+                new Point3D(pose.getX(), pose.getY(), pose.getZ() - radius)
         };
     }
 
     @Override
-    public Vector3D[] axisAt(Pose3D pose) {
+    public Vector3D[] axisAt(Pose pose) {
         return new Vector3D[]{
             Vector3D.X,
             Vector3D.Y,

@@ -1,6 +1,6 @@
 package es.usc.citius.lab.motionplanner.core.spatial;
 
-public interface Point {
+public interface Point extends Rotable<Point>{
 
     public float getX();
 

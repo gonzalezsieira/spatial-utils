@@ -164,7 +164,7 @@ public class ShapeRectangle3D extends Shape3D{
     }
 
     @Override
-    public Point3D[] vertexAt(Pose3D pose) {
+    public Point3D[] vertexAt(Pose pose) {
         Point3D[] corners_rotated = new Point3D[CORNERS.length];
         for(int i = 0; i < CORNERS.length; i++){
             corners_rotated[i] = CORNERS[i].rotate(pose.getYaw(), pose.getPitch(), pose.getRoll());
@@ -173,7 +173,7 @@ public class ShapeRectangle3D extends Shape3D{
     }
 
     @Override
-    public Vector3D[] axisAt(Pose3D pose) {
+    public Vector3D[] axisAt(Pose pose) {
         return new Vector3D[]{
             AXIS_X.rotate(pose.getYaw(), pose.getPitch(), pose.getRoll()),
             AXIS_Y.rotate(pose.getYaw(), pose.getPitch(), pose.getRoll()),

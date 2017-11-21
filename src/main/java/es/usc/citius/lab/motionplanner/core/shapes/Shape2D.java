@@ -64,24 +64,10 @@ public abstract class Shape2D extends Shape{
      */
     public abstract float borderDistanceAtRelativeAngle(float yaw);
 
-    /**
-     * Retuns an interable set with the vertex of the shape,
-     * given the pose of the rotation center.
-     *
-     * @param pose of the rotation center of the shape
-     *
-     * @return iterable set of vertex
-     */
+    @Override
     public abstract Point2D[] vertexAt(Pose pose);
 
-    /**
-     * Retuns an interable set with the axis of the shape,
-     * given the pose of the rotation center.
-     *
-     * @param pose of the rotation center of the shape
-     *
-     * @return iterable set of axis
-     */
+    @Override
     public abstract Vector2D[] axisAt(Pose pose);
 
     /**

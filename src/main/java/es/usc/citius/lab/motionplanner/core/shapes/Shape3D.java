@@ -63,24 +63,10 @@ public abstract class Shape3D extends Shape {
      */
     public abstract float borderDistanceAtRelativeAngle(float yaw, float pitch);
 
-    /**
-     * Retuns an interable set with the vertex of the shape,
-     * given the pose of the rotation center.
-     *
-     * @param pose of the rotation center of the shape
-     *
-     * @return iterable set of vertex
-     */
-    public abstract Point3D[] vertexAt(Pose3D pose);
+    @Override
+    public abstract Point3D[] vertexAt(Pose pose);
 
-    /**
-     * Retuns an interable set with the axis of the shape,
-     * given the pose of the rotation center.
-     *
-     * @param pose of the rotation center of the shape
-     *
-     * @return iterable set of axis
-     */
-    public abstract Vector3D[] axisAt(Pose3D pose);
+    @Override
+    public abstract Vector3D[] axisAt(Pose pose);
 
 }

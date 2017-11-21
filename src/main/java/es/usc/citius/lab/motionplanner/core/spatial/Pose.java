@@ -26,4 +26,15 @@ public interface Pose extends Point{
     @Override
     public Pose subtract(Point move);
 
+    /**
+     * Rotates the position and heading of the pose.
+     *
+     * @param yaw rotation in yaw
+     * @param roll rotation in roll
+     * @param pitch rotation in pitch
+     * @return rotated pose (position and heading)
+     */
+    @Override
+    public Pose rotate(float yaw, float pitch, float roll);
+
 }
