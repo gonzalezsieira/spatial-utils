@@ -65,14 +65,14 @@ public final class ShapeCircle2D extends Shape2D {
     }
 
     @Override
-    public Point2D borderPointAtRelativeAngle(float angle) {
-        float x = (float) FastMath.cos(angle) * radius;
-        float y = (float) FastMath.sin(angle) * radius;
+    public Point2D borderPointAtRelativeAngle(float yaw, float pitch) {
+        float x = (float) FastMath.cos(yaw) * radius;
+        float y = (float) FastMath.sin(yaw) * radius;
         return new Point2D(x, y);
     }
 
     @Override
-    public float borderDistanceAtRelativeAngle(float yaw) {
+    public float borderDistanceAtRelativeAngle(float yaw, float pitch) {
         return radius;
     }
 
@@ -97,8 +97,8 @@ public final class ShapeCircle2D extends Shape2D {
     }
 
     @Override
-    public double[][] distanceVectorToPoint(Pose robotPose, Point point, float angle) {
-        Point2D border = borderPointAtRelativeAngle(angle);
+    public double[][] distanceVectorToPoint(Pose robotPose, Point point, float yaw) {
+        Point2D border = borderPointAtRelativeAngle(yaw, 0f);
         return new double[][]{{point.getX() - border.getX()}, {point.getY() - border.getY()}};
     }
 

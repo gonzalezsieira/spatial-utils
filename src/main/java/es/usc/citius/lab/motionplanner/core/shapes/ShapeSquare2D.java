@@ -208,12 +208,12 @@ public final class ShapeSquare2D extends Shape2D {
     }
 
     @Override
-    public Point2D borderPointAtRelativeAngle(float angle) {
-        return borderPositionsByAngle.get(roundDegrees(angle));
+    public Point2D borderPointAtRelativeAngle(float yaw, float pitch) {
+        return borderPositionsByAngle.get(roundDegrees(yaw));
     }
 
     @Override
-    public float borderDistanceAtRelativeAngle(float yaw) {
+    public float borderDistanceAtRelativeAngle(float yaw, float pitch) {
         return distancesByAngle.get(roundDegrees(yaw));
     }
     

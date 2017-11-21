@@ -69,6 +69,23 @@ public abstract class Shape implements Serializable {
     public abstract float getMaxRadius();
 
     /**
+     * Retrieves the position of the border of this shape in a relative
+     * orientation from the heading.
+     *
+     * @param yaw relative orientation from heading
+     * @return position of the border of the at the given orientation
+     */
+    public abstract Point borderPointAtRelativeAngle(float yaw, float pitch);
+
+    /**
+     * Retrieves the distance between the border of the shape  of the border
+     *
+     * @param yaw relative orientation from heading
+     * @return distance between the rotation center and the border at the given orientation
+     */
+    public abstract float borderDistanceAtRelativeAngle(float yaw, float pitch);
+
+    /**
      * Loads the information of the shape contained in a
      * {@link HierarchicalConfiguration} file.
      *

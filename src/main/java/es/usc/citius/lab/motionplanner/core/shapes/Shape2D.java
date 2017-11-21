@@ -47,22 +47,8 @@ public abstract class Shape2D extends Shape{
         loadConfig(config);
     }
 
-    /**
-     * Retrieves the position of the border of this shape in a relative
-     * orientation from the heading.
-     * 
-     * @param yaw relative orientation from heading
-     * @return 2D position of the border of the at the given orientation
-     */
-    public abstract Point2D borderPointAtRelativeAngle(float yaw);
-    
-    /**
-     * Retrieves the distance between the border of the shape  of the border
-     * 
-     * @param yaw relative orientation from heading
-     * @return distance between the rotation center and the border at the given orientation
-     */
-    public abstract float borderDistanceAtRelativeAngle(float yaw);
+    @Override
+    public abstract Point2D borderPointAtRelativeAngle(float yaw, float pitch);
 
     @Override
     public abstract Point2D[] vertexAt(Pose pose);

@@ -45,23 +45,8 @@ public abstract class Shape3D extends Shape {
         loadConfig(config);
     }
 
-    /**
-     * Retrieves the position of the border of this shape in a relative
-     * orientation from the heading.
-     *
-     * @param yaw relative orientation from heading
-     * @return 2D position of the border of the at the given orientation
-     */
+    @Override
     public abstract Point3D borderPointAtRelativeAngle(float yaw, float pitch);
-
-    /**
-     * Retrieves the distance between the border of the shape  of the border
-     *
-     * @param yaw orientation around Z (between -PI and PI)
-     * @param pitch orientation around Y (between -PI/4 and PI/4)
-     * @return distance between the rotation center and the border at the given orientation
-     */
-    public abstract float borderDistanceAtRelativeAngle(float yaw, float pitch);
 
     @Override
     public abstract Point3D[] vertexAt(Pose pose);
