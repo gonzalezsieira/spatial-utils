@@ -67,6 +67,11 @@ public class Vector2D implements Vector, Serializable{
         return this.x * other.getX() + this.y * other.getY();
     }
 
+    @Override
+    public float dotProduct(Point other) {
+        return this.x * other.getX() + this.y * other.getY();
+    }
+
     public void normalize(){
         float value = x * x + y * y;
         //avoids normalizing vectors when they are already unitary

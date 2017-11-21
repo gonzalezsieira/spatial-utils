@@ -14,6 +14,14 @@ public interface Vector extends Rotable<Vector>{
     public float dotProduct(Vector other);
 
     /**
+     * Performs the dot product between two Vector and Point.
+     *
+     * @param other other instance of {@link Vector}
+     * @return
+     */
+    public float dotProduct(Point other);
+
+    /**
      * Modifies the length of the vector to be module = 1.
      */
     public void normalize();

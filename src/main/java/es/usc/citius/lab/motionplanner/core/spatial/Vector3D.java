@@ -89,6 +89,11 @@ public class Vector3D implements Vector, Serializable{
     }
 
     @Override
+    public float dotProduct(Point other) {
+        return x*other.getX() + y*other.getY() + z*other.getZ();
+    }
+
+    @Override
     public Vector3D rotate(float yaw, float pitch, float roll) {
         float[] rotated = rotateXYZCoordinates(this.x, this.y, this.z, yaw, pitch, roll);
         return new Vector3D(rotated[0], rotated[1], rotated[2]);
