@@ -35,6 +35,7 @@ public class ShapeRectangle3D extends Shape3D{
      */
     public ShapeRectangle3D(HierarchicalConfiguration config){
         super(config);
+        initialize();
     }
 
     /**
@@ -48,7 +49,10 @@ public class ShapeRectangle3D extends Shape3D{
         this.halfDimX = dimX / 2;
         this.halfDimY = dimY / 2;
         this.halfDimZ = dimZ / 2;
+        initialize();
+    }
 
+    private void initialize(){
         //distances to border
         this.minRadius = FastMath.min(FastMath.min(halfDimX, halfDimY), halfDimZ);
         this.maxRadius = new Point3D(halfDimX, halfDimY, halfDimZ).distance(Point3D.ZERO);
@@ -60,13 +64,13 @@ public class ShapeRectangle3D extends Shape3D{
         //generate corners
         CORNERS = new Point3D[8];
         CORNERS[0] = new Point3D(halfDimX, -halfDimY, halfDimZ);
-        CORNERS[0] = new Point3D(halfDimX, halfDimY, halfDimZ);
-        CORNERS[0] = new Point3D(-halfDimX, halfDimY, halfDimZ);
-        CORNERS[0] = new Point3D(-halfDimX, -halfDimY, halfDimZ);
-        CORNERS[0] = new Point3D(halfDimX, -halfDimY, -halfDimZ);
-        CORNERS[0] = new Point3D(halfDimX, halfDimY, -halfDimZ);
-        CORNERS[0] = new Point3D(-halfDimX, halfDimY, -halfDimZ);
-        CORNERS[0] = new Point3D(-halfDimX, -halfDimY, -halfDimZ);
+        CORNERS[1] = new Point3D(halfDimX, halfDimY, halfDimZ);
+        CORNERS[2] = new Point3D(-halfDimX, halfDimY, halfDimZ);
+        CORNERS[3] = new Point3D(-halfDimX, -halfDimY, halfDimZ);
+        CORNERS[4] = new Point3D(halfDimX, -halfDimY, -halfDimZ);
+        CORNERS[5] = new Point3D(halfDimX, halfDimY, -halfDimZ);
+        CORNERS[6] = new Point3D(-halfDimX, halfDimY, -halfDimZ);
+        CORNERS[7] = new Point3D(-halfDimX, -halfDimY, -halfDimZ);
     }
 
     @Override
