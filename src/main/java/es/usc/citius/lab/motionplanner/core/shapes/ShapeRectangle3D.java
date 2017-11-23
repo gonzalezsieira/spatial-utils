@@ -172,6 +172,7 @@ public class ShapeRectangle3D extends Shape3D{
         Point3D[] corners_rotated = new Point3D[CORNERS.length];
         for(int i = 0; i < CORNERS.length; i++){
             corners_rotated[i] = CORNERS[i].rotate(pose.getYaw(), pose.getPitch(), pose.getRoll());
+            corners_rotated[i].staticAdd(pose);
         }
         return corners_rotated;
     }
