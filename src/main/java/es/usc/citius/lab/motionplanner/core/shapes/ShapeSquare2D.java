@@ -124,7 +124,7 @@ public final class ShapeSquare2D extends Shape2D {
      * @return list of {@link Point2D} with the corners of the shape when it is centered in the given pose
      */
     @Override
-    public Point2D[] vertexAt(Pose pose) {
+    public Point3D[] vertexAt(Pose pose) {
         float x = pose.getX();
         float y = pose.getY();
         float yaw = pose.getYaw();
@@ -136,11 +136,11 @@ public final class ShapeSquare2D extends Shape2D {
         float halfDimXDotSin = halfDimX * sin;
         float halfDimYDotSin = halfDimY * sin;
         //calculate corners of a squared shape, first rotated and then added according to the pose information
-        return new Point2D[]{
-                new Point2D(x + halfDimXDotCos + halfDimYDotSin, y + halfDimXDotSin - halfDimYDotCos),
-                new Point2D(x + halfDimXDotCos - halfDimYDotSin, y + halfDimXDotSin + halfDimYDotCos),
-                new Point2D(x - halfDimXDotCos - halfDimYDotSin, y - halfDimXDotSin + halfDimYDotCos),
-                new Point2D(x - halfDimXDotCos + halfDimYDotSin, y - halfDimXDotSin - halfDimYDotCos)
+        return new Point3D[]{
+                new Point3D(x + halfDimXDotCos + halfDimYDotSin, y + halfDimXDotSin - halfDimYDotCos, 0f),
+                new Point3D(x + halfDimXDotCos - halfDimYDotSin, y + halfDimXDotSin + halfDimYDotCos, 0f),
+                new Point3D(x - halfDimXDotCos - halfDimYDotSin, y - halfDimXDotSin + halfDimYDotCos, 0f),
+                new Point3D(x - halfDimXDotCos + halfDimYDotSin, y - halfDimXDotSin - halfDimYDotCos, 0f)
         };
     }
     
@@ -238,14 +238,14 @@ public final class ShapeSquare2D extends Shape2D {
     }
 
     @Override
-    public Vector2D[] axisAt(Pose pose) {
+    public Vector3D[] axisAt(Pose pose) {
         float yaw = pose.getYaw();
         //pre-calculated values for effiency
         float cos = (float) FastMath.cos(yaw);
         float sin = (float) FastMath.sin(yaw);
-        return new Vector2D[]{
-                new Vector2D(halfDimX * cos, halfDimX * sin),
-                new Vector2D(-halfDimY * sin, halfDimY * cos)
+        return new Vector3D[]{
+                new Vector3D(halfDimX * cos, halfDimX * sin, 0f),
+                new Vector3D(-halfDimY * sin, halfDimY * cos, 0f)
         };
     }
 }

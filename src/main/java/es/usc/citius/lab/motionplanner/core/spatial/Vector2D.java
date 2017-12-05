@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @author Adrián González Sieira <<a href="mailto:adrian.gonzalez@usc.es">adrian.gonzalez@usc.es</a>>
  * @since 04/05/2015
  */
-public class Vector2D implements Vector, Serializable{
+public class Vector2D implements Serializable{
 
     public static final Vector2D X = new Vector2D(new Point2D(0f, 0f), new Point2D(1f, 0f));
     public static final Vector2D Y = new Vector2D(new Point2D(0f, 0f), new Point2D(0f, 1f));
@@ -57,19 +57,17 @@ public class Vector2D implements Vector, Serializable{
         this.y = y;
     }
 
-    @Override
     public Vector2D rotate(float yaw, float pitch, float roll) {
         float[] rotated = rotateXYCoordinates(x, y, yaw);
         return new Vector2D(rotated[0], rotated[1]);
     }
 
-    public float dotProduct(Vector other){
-        return this.x * other.getX() + this.y * other.getY();
+    public float dotProduct(Vector2D other){
+        return this.x * other.x + this.y * other.y;
     }
 
-    @Override
-    public float dotProduct(Point other) {
-        return this.x * other.getX() + this.y * other.getY();
+    public float dotProduct(Point2D other) {
+        return this.x * other.x + this.y * other.y;
     }
 
     public void normalize(){
@@ -82,18 +80,12 @@ public class Vector2D implements Vector, Serializable{
         }
     }
 
-    @Override
     public float getX() {
         return x;
     }
 
-    @Override
     public float getY() {
         return y;
     }
 
-    @Override
-    public float getZ() {
-        return 0;
-    }
 }

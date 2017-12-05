@@ -218,14 +218,14 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
     }
 
     @Override
-    public Vector2D[] axisAt(Pose pose) {
+    public Vector3D[] axisAt(Pose pose) {
         float yaw = pose.getYaw();
         //pre-calculated values for effiency
         float cos = (float) FastMath.cos(yaw);
         float sin = (float) FastMath.sin(yaw);
-        return new Vector2D[]{
-                new Vector2D(positiveX * cos, positiveX * sin),
-                new Vector2D(negativeY * sin, positiveY * cos)
+        return new Vector3D[]{
+                new Vector3D(positiveX * cos, positiveX * sin, 0f),
+                new Vector3D(negativeY * sin, positiveY * cos, 0f)
         };
     }
 
@@ -237,7 +237,7 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
      * @return list of {@link Point2D} with the corners of the shape when it is centered in the given pose
      */
     @Override
-    public Point2D[] vertexAt(Pose pose) {
+    public Point3D[] vertexAt(Pose pose) {
         float x = pose.getX();
         float y = pose.getY();
         float yaw = pose.getYaw();
@@ -253,11 +253,11 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
         float negativeYDotSin = negativeY * sin;
         float positiveYDotSin = positiveY * sin;
         //calculate corners of a squared shape, first rotated and then added according to the pose information
-        return new Point2D[]{
-                new Point2D(x + positiveXDotCos - negativeYDotSin, y + positiveXDotSin + negativeYDotCos),
-                new Point2D(x + positiveXDotCos - positiveYDotSin, y + positiveXDotSin + positiveYDotCos),
-                new Point2D(x + negativeXDotCos - positiveYDotSin, y + negativeXDotSin + positiveYDotCos),
-                new Point2D(x + negativeXDotCos - negativeYDotSin, y + negativeXDotSin + negativeYDotCos)
+        return new Point3D[]{
+                new Point3D(x + positiveXDotCos - negativeYDotSin, y + positiveXDotSin + negativeYDotCos, 0f),
+                new Point3D(x + positiveXDotCos - positiveYDotSin, y + positiveXDotSin + positiveYDotCos, 0f),
+                new Point3D(x + negativeXDotCos - positiveYDotSin, y + negativeXDotSin + positiveYDotCos, 0f),
+                new Point3D(x + negativeXDotCos - negativeYDotSin, y + negativeXDotSin + negativeYDotCos, 0f)
         };
     }
 }

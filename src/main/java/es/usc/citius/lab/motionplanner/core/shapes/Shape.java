@@ -16,8 +16,9 @@
 package es.usc.citius.lab.motionplanner.core.shapes;
 
 import es.usc.citius.lab.motionplanner.core.spatial.Point;
+import es.usc.citius.lab.motionplanner.core.spatial.Point3D;
 import es.usc.citius.lab.motionplanner.core.spatial.Pose;
-import es.usc.citius.lab.motionplanner.core.spatial.Vector;
+import es.usc.citius.lab.motionplanner.core.spatial.Vector3D;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 
 import java.io.Serializable;
@@ -42,7 +43,7 @@ public abstract class Shape implements Serializable {
      *
      * @return iterable set of vertex
      */
-    public abstract Vector[] axisAt(Pose pose);
+    public abstract Vector3D[] axisAt(Pose pose);
 
     /**
      * Retuns an interable set with the axis of the shape,
@@ -52,7 +53,7 @@ public abstract class Shape implements Serializable {
      *
      * @return iterable set of axis
      */
-    public abstract Point[] vertexAt(Pose pose);
+    public abstract Point3D[] vertexAt(Pose pose);
 
     /**
      * Retrieves the optimistic radius of the robot shape.

@@ -17,6 +17,7 @@ package es.usc.citius.lab.motionplanner.core.shapes;
 
 import es.usc.citius.lab.motionplanner.core.RepeatRule;
 import es.usc.citius.lab.motionplanner.core.spatial.Point2D;
+import es.usc.citius.lab.motionplanner.core.spatial.Point3D;
 import es.usc.citius.lab.motionplanner.core.spatial.Pose2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,12 +66,12 @@ public class ShapeSquare2DTest {
         //generate the distance between the center and the corners
         double distance = FastMath.hypot(dx / 2, dy / 2);
         //check the corners are generated properly (in angle and distance)
-        for(Point2D current : shape.vertexAt(Pose2D.ZERO)){
+        for(Point3D current : shape.vertexAt(Pose2D.ZERO)){
             //test distance
-            assertEquals(current.distance(Point2D.ZERO), distance, ERR);
+            assertEquals(current.distance(Point3D.ZERO), distance, ERR);
             //test angle
             //angle of the current corner
-            double currentAngle = Point2D.ZERO.yawTo(current);
+            double currentAngle = Point3D.ZERO.yawTo(current);
             boolean found = false;
             //check if the angle is in the list of angles of the corners
             for(double listAngle : angles){

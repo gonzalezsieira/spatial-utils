@@ -27,7 +27,7 @@ import static es.usc.citius.lab.motionplanner.core.spatial.Point3D.rotateXYZCoor
  *
  * @author Adrián González Sieira <adrian.gonzalez@usc.es>
  */
-public class Vector3D implements Vector, Serializable{
+public class Vector3D implements Serializable{
 
     private static final long serialVersionUID = 20140710L;
     public static final Vector3D X = new Vector3D(1f, 0f, 0f);
@@ -69,8 +69,8 @@ public class Vector3D implements Vector, Serializable{
      * @param other other point
      * @return dot product result
      */
-    public float dotProduct(Vector other){
-        return x*other.getX() + y*other.getY() + z*other.getZ();
+    public float dotProduct(Vector3D other){
+        return x*other.x + y*other.y + z*other.z;
     }
     
     /**
@@ -88,18 +88,15 @@ public class Vector3D implements Vector, Serializable{
         return this.x*x + this.y*y + this.z*z;
     }
 
-    @Override
-    public float dotProduct(Point other) {
-        return x*other.getX() + y*other.getY() + z*other.getZ();
+    public float dotProduct(Point3D other) {
+        return x*other.x + y*other.y + z*other.z;
     }
 
-    @Override
     public Vector3D rotate(float yaw, float pitch, float roll) {
         float[] rotated = rotateXYZCoordinates(this.x, this.y, this.z, yaw, pitch, roll);
         return new Vector3D(rotated[0], rotated[1], rotated[2]);
     }
 
-    @Override
     public void normalize(){
         float value = x * x + y * y + z * z;
         //avoids normalizing vectors when they are already unitary
@@ -111,17 +108,14 @@ public class Vector3D implements Vector, Serializable{
         }
     }
 
-    @Override
     public float getX() {
         return x;
     }
 
-    @Override
     public float getY() {
         return y;
     }
 
-    @Override
     public float getZ() {
         return z;
     }

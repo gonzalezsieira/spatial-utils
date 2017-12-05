@@ -50,12 +50,6 @@ public abstract class Shape2D extends Shape{
     @Override
     public abstract Point2D borderPointAtRelativeAngle(float yaw, float pitch);
 
-    @Override
-    public abstract Point2D[] vertexAt(Pose pose);
-
-    @Override
-    public abstract Vector2D[] axisAt(Pose pose);
-
     /**
      * Calculates the distance vector between the border of the shape 
      * and the point given as argument; this method calls

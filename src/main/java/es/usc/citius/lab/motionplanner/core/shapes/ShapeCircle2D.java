@@ -77,12 +77,12 @@ public final class ShapeCircle2D extends Shape2D {
     }
 
     @Override
-    public Point2D[] vertexAt(Pose pose) {
-        return new Point2D[]{
-                new Point2D(pose.getX() + radius, pose.getY()),
-                new Point2D(pose.getX() - radius, pose.getY()),
-                new Point2D(pose.getX(), pose.getY() + radius),
-                new Point2D(pose.getX(), pose.getY() - radius)
+    public Point3D[] vertexAt(Pose pose) {
+        return new Point3D[]{
+                new Point3D(pose.getX() + radius, pose.getY(), 0f),
+                new Point3D(pose.getX() - radius, pose.getY(), 0f),
+                new Point3D(pose.getX(), pose.getY() + radius, 0f),
+                new Point3D(pose.getX(), pose.getY() - radius, 0f)
         };
     }
 
@@ -103,10 +103,10 @@ public final class ShapeCircle2D extends Shape2D {
     }
 
     @Override
-    public Vector2D[] axisAt(Pose pose) {
-        return new Vector2D[]{
-            Vector2D.X,
-            Vector2D.Y
+    public Vector3D[] axisAt(Pose pose) {
+        return new Vector3D[]{
+            Vector3D.X,
+            Vector3D.Y
         };
     }
 }
