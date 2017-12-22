@@ -20,6 +20,7 @@ import es.usc.citius.lab.motionplanner.core.spatial.Point3D;
 import es.usc.citius.lab.motionplanner.core.spatial.Pose;
 import es.usc.citius.lab.motionplanner.core.spatial.Vector3D;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.ejml.data.FixedMatrix3x3_64F;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -54,6 +55,30 @@ public abstract class Shape implements Serializable {
      * @return iterable set of axis
      */
     public abstract Point3D[] vertexAt(Pose pose);
+
+    /**
+     * Returns a 3x3 matrix with the axis of the shape given the pose
+     * of the rotation center.
+     *
+     * @param pose pose of the rotation center of the shape
+     * @return 3x3 matrix with the axes
+     */
+    public abstract FixedMatrix3x3_64F axesMatrixAt(Pose pose);
+
+    /**
+     * @return distance from the centroid to the shape of the border (dimension X in local frame)
+     */
+    public abstract double distanceToCentroidX();
+
+    /**
+     * @return distance from the centroid to the shape of the border (dimension Y in local frame)
+     */
+    public abstract double distanceToCentroidY();
+
+    /**
+     * @return distance from the centroid to the shape of the border (dimension Z in local frame)
+     */
+    public abstract double distanceToCentroidZ();
 
     /**
      * Retrieves the optimistic radius of the robot shape.

@@ -20,6 +20,7 @@ import es.usc.citius.lab.motionplanner.core.spatial.Pose;
 import es.usc.citius.lab.motionplanner.core.spatial.Pose3D;
 import es.usc.citius.lab.motionplanner.core.spatial.Vector3D;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.ejml.data.FixedMatrix3x3_64F;
 
 /**
  * This class implements a specific form of {@link Shape3D} that defines a sphere
@@ -102,5 +103,29 @@ public class ShapeSphere3D extends Shape3D{
         if(Float.isNaN(radius)){
             throw new RuntimeException("required field " + SUBID_RADIUS + " is empty");
         }
+    }
+
+    @Override
+    public FixedMatrix3x3_64F axesMatrixAt(Pose pose) {
+        FixedMatrix3x3_64F matrix = new FixedMatrix3x3_64F();
+        matrix.a11 = 1; //1st column: (1, 0, 0)
+        matrix.a22 = 1; //2nd column: (0, 1, 0)
+        matrix.a33 = 1; // 3rd column: (0, 0, 1)
+        return matrix;
+    }
+
+    @Override
+    public double distanceToCentroidX() {
+        return radius;
+    }
+
+    @Override
+    public double distanceToCentroidY() {
+        return radius;
+    }
+
+    @Override
+    public double distanceToCentroidZ() {
+        return radius;
     }
 }

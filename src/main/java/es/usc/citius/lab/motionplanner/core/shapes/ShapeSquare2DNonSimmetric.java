@@ -18,8 +18,11 @@ package es.usc.citius.lab.motionplanner.core.shapes;
 import es.usc.citius.lab.motionplanner.core.spatial.*;
 import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import es.usc.citius.lab.motionplanner.core.util.Pair;
+import es.usc.citius.lab.motionplanner.core.util.RotationUtils;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.math3.util.FastMath;
+import org.ejml.alg.fixed.FixedOps3;
+import org.ejml.data.FixedMatrix3x3_64F;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -259,5 +262,40 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
                 new Point3D(x + negativeXDotCos - positiveYDotSin, y + negativeXDotSin + positiveYDotCos, 0f),
                 new Point3D(x + negativeXDotCos - negativeYDotSin, y + negativeXDotSin + negativeYDotCos, 0f)
         };
+    }
+
+    @Override
+    public FixedMatrix3x3_64F axesMatrixAt(Pose pose) {
+        //get rotation matrix
+        FixedMatrix3x3_64F axesMatrix = new FixedMatrix3x3_64F();
+        //pre-calculated values for effiency
+        float cos = (float) FastMath.cos(pose.getYaw());
+        float sin = (float) FastMath.sin(pose.getYaw());
+
+        //first column
+        axesMatrix.a11 = cos;
+        axesMatrix.a21 = -sin;
+
+        //second column
+        axesMatrix.a12 = sin;
+        axesMatrix.a22 = cos;
+
+        //return result
+        return axesMatrix;
+    }
+
+    @Override
+    public double distanceToCentroidX() {
+        return (positiveX + negativeX)/2f;
+    }
+
+    @Override
+    public double distanceToCentroidY() {
+        return (positiveY + negativeY)/2f;
+    }
+
+    @Override
+    public double distanceToCentroidZ() {
+        return 0f;
     }
 }

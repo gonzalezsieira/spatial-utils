@@ -19,11 +19,14 @@ import es.usc.citius.lab.motionplanner.core.spatial.*;
 
 import java.util.*;
 
+import es.usc.citius.lab.motionplanner.core.util.RotationUtils;
 import org.apache.commons.math3.util.FastMath;
 
 import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import es.usc.citius.lab.motionplanner.core.util.Pair;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.ejml.alg.fixed.FixedOps3;
+import org.ejml.data.FixedMatrix3x3_64F;
 
 /**
  * This class contains a set of points that defines, approximately, the form of
@@ -248,4 +251,40 @@ public final class ShapeSquare2D extends Shape2D {
                 new Vector3D(-halfDimY * sin, halfDimY * cos, 0f)
         };
     }
+
+    @Override
+    public FixedMatrix3x3_64F axesMatrixAt(Pose pose) {
+        //get rotation matrix
+        FixedMatrix3x3_64F axesMatrix = new FixedMatrix3x3_64F();
+        //pre-calculated values for effiency
+        float cos = (float) FastMath.cos(pose.getYaw());
+        float sin = (float) FastMath.sin(pose.getYaw());
+
+        //first column
+        axesMatrix.a11 = cos;
+        axesMatrix.a21 = -sin;
+
+        //second column
+        axesMatrix.a12 = sin;
+        axesMatrix.a22 = cos;
+
+        //return result
+        return axesMatrix;
+    }
+
+    @Override
+    public double distanceToCentroidX() {
+        return halfDimX;
+    }
+
+    @Override
+    public double distanceToCentroidY() {
+        return halfDimY;
+    }
+
+    @Override
+    public double distanceToCentroidZ() {
+        return 0f;
+    }
+
 }

@@ -1,8 +1,12 @@
 package es.usc.citius.lab.motionplanner.core.shapes;
 
 import es.usc.citius.lab.motionplanner.core.spatial.*;
+import es.usc.citius.lab.motionplanner.core.util.RotationUtils;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.util.FastMath;
+import org.ejml.alg.fixed.FixedOps3;
+import org.ejml.data.FixedMatrix3x3_64F;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -21,6 +25,7 @@ public class ShapeRectangle3D extends Shape3D{
     private Vector3D AXIS_X = new Vector3D(1, 0, 0);
     private Vector3D AXIS_Y = new Vector3D(0, 1, 0);
     private Vector3D AXIS_Z = new Vector3D(0, 0, 1);
+    private FixedMatrix3x3_64F AXES_MATRIX = new FixedMatrix3x3_64F();
     private Point3D UNIT = new Point3D(1, 0, 0);
 
     //hierarchical configuration params
@@ -53,6 +58,8 @@ public class ShapeRectangle3D extends Shape3D{
     }
 
     private void initialize(){
+        //initialize axes matrix
+        FixedOps3.setIdentity(AXES_MATRIX);
         //distances to border
         this.minRadius = FastMath.min(FastMath.min(halfDimX, halfDimY), halfDimZ);
         this.maxRadius = new Point3D(halfDimX, halfDimY, halfDimZ).distance(Point3D.ZERO);
@@ -210,5 +217,32 @@ public class ShapeRectangle3D extends Shape3D{
         if(Float.isNaN(halfDimZ)){
             throw new RuntimeException("required field " + SUBID_DIMZ + " is empty");
         }
+    }
+
+    @Override
+    public FixedMatrix3x3_64F axesMatrixAt(Pose pose) {
+        //get rotation matrix
+        FixedMatrix3x3_64F rotationMatrix = RotationUtils.rotationMatrix(pose.getYaw(), pose.getPitch(), pose.getRoll());
+
+        //rotate axes
+        FixedOps3.mult(rotationMatrix, AXES_MATRIX, rotationMatrix);
+
+        //return result
+        return rotationMatrix;
+    }
+
+    @Override
+    public double distanceToCentroidX() {
+        return halfDimX;
+    }
+
+    @Override
+    public double distanceToCentroidY() {
+        return halfDimY;
+    }
+
+    @Override
+    public double distanceToCentroidZ() {
+        return halfDimZ;
     }
 }

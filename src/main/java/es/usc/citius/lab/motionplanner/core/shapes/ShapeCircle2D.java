@@ -19,6 +19,7 @@ import es.usc.citius.lab.motionplanner.core.spatial.*;
 
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.math3.util.FastMath;
+import org.ejml.data.FixedMatrix3x3_64F;
 
 /**
  * This class implements a specific form of the shape, that defines a circle
@@ -108,5 +109,28 @@ public final class ShapeCircle2D extends Shape2D {
             Vector3D.X,
             Vector3D.Y
         };
+    }
+
+    @Override
+    public FixedMatrix3x3_64F axesMatrixAt(Pose pose) {
+        FixedMatrix3x3_64F matrix = new FixedMatrix3x3_64F();
+        matrix.a11 = 1; //1st column: (1, 0, 0)
+        matrix.a22 = 1; //2nd column: (0, 1, 0) //3rd column: (0, 0, 0)
+        return matrix;
+    }
+
+    @Override
+    public double distanceToCentroidX() {
+        return radius;
+    }
+
+    @Override
+    public double distanceToCentroidY() {
+        return radius;
+    }
+
+    @Override
+    public double distanceToCentroidZ() {
+        return radius;
     }
 }
