@@ -26,6 +26,7 @@ import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import es.usc.citius.lab.motionplanner.core.util.Pair;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.ejml.alg.fixed.FixedOps3;
+import org.ejml.data.FixedMatrix2x2_64F;
 import org.ejml.data.FixedMatrix3x3_64F;
 
 /**
@@ -273,6 +274,26 @@ public final class ShapeSquare2D extends Shape2D {
     }
 
     @Override
+    public FixedMatrix2x2_64F axesMatrix2DAt(Pose pose) {
+        //get rotation matrix
+        FixedMatrix2x2_64F axesMatrix = new FixedMatrix2x2_64F();
+        //pre-calculated values for effiency
+        float cos = (float) FastMath.cos(pose.getYaw());
+        float sin = (float) FastMath.sin(pose.getYaw());
+
+        //first column
+        axesMatrix.a11 = cos;
+        axesMatrix.a21 = -sin;
+
+        //second column
+        axesMatrix.a12 = sin;
+        axesMatrix.a22 = cos;
+
+        //return result
+        return axesMatrix;
+    }
+
+    @Override
     public double distanceToCentroidX() {
         return halfDimX;
     }
@@ -287,4 +308,8 @@ public final class ShapeSquare2D extends Shape2D {
         return 0f;
     }
 
+    @Override
+    public Vector3D distanceBetweenCenterandCentroid(Pose pose) {
+        return Vector3D.ZERO;
+    }
 }

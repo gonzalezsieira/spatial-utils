@@ -245,4 +245,9 @@ public class ShapeRectangle3D extends Shape3D{
     public double distanceToCentroidZ() {
         return halfDimZ;
     }
+
+    @Override
+    public Vector3D distanceBetweenCenterandCentroid(Pose pose) {
+        return Vector3D.ZERO;
+    }
 }

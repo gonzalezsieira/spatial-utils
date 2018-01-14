@@ -128,4 +128,9 @@ public class ShapeSphere3D extends Shape3D{
     public double distanceToCentroidZ() {
         return radius;
     }
+
+    @Override
+    public Vector3D distanceBetweenCenterandCentroid(Pose pose) {
+        return Vector3D.ZERO;
+    }
 }

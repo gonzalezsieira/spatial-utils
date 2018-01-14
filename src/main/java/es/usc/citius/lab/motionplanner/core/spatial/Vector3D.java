@@ -33,6 +33,7 @@ public class Vector3D implements Serializable{
     public static final Vector3D X = new Vector3D(1f, 0f, 0f);
     public static final Vector3D Y = new Vector3D(0f, 1f, 0f);
     public static final Vector3D Z = new Vector3D(0f, 0f, 1f);
+    public static final Vector3D ZERO = new Vector3D(0f, 0f, 0f);
     public float x;
     public float y;
     public float z;

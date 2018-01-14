@@ -18,6 +18,8 @@ package es.usc.citius.lab.motionplanner.core.shapes;
 import es.usc.citius.lab.motionplanner.core.spatial.*;
 import es.usc.citius.lab.motionplanner.core.util.MathFunctions;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.ejml.data.FixedMatrix2x2_64F;
+import org.ejml.data.FixedMatrix3x3_64F;
 
 /**
  * This class defines a main methods to interact with a definition of 
@@ -74,4 +76,12 @@ public abstract class Shape2D extends Shape{
      */
     public abstract double[][] distanceVectorToPoint(Pose robotPose, Point point, float angle);
 
+    /**
+     * Returns a 2x2 matrix with the axis of the shape given the pose
+     * of the rotation center.
+     *
+     * @param pose pose of the rotation center of the shape
+     * @return 2x2 matrix with the axes
+     */
+    public abstract FixedMatrix2x2_64F axesMatrix2DAt(Pose pose);
 }

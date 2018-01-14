@@ -22,6 +22,7 @@ import es.usc.citius.lab.motionplanner.core.util.RotationUtils;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.math3.util.FastMath;
 import org.ejml.alg.fixed.FixedOps3;
+import org.ejml.data.FixedMatrix2x2_64F;
 import org.ejml.data.FixedMatrix3x3_64F;
 
 import java.util.HashMap;
@@ -49,6 +50,9 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
     private float angle4; //angle of the front-right corner
     private float optimisticRadius;
     private float pessimisticRadius;
+    private float distanceToCentroidX;
+    private float distanceToCentroidY;
+    private Vector3D distanceBetweenCenterAndCentroid;
 
     /**
      * Initializes the squared shape based on the dimensions from its rotation center.
@@ -113,6 +117,13 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
                 new Point2D(negativeX, positiveY),
                 new Point2D(negativeX, negativeY)
         };
+        this.distanceToCentroidX = (FastMath.abs(positiveX) + FastMath.abs(negativeX))/2f;
+        this.distanceToCentroidY = (FastMath.abs(positiveY) + FastMath.abs(negativeY))/2f;
+        this.distanceBetweenCenterAndCentroid = new Vector3D(
+                distanceToCentroidX - FastMath.abs(negativeX),
+                distanceToCentroidY - FastMath.abs(negativeY),
+                0
+        );
     }
 
     /**
@@ -285,17 +296,42 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
     }
 
     @Override
+    public FixedMatrix2x2_64F axesMatrix2DAt(Pose pose) {
+        //get rotation matrix
+        FixedMatrix2x2_64F axesMatrix = new FixedMatrix2x2_64F();
+        //pre-calculated values for effiency
+        float cos = (float) FastMath.cos(pose.getYaw());
+        float sin = (float) FastMath.sin(pose.getYaw());
+
+        //first column
+        axesMatrix.a11 = cos;
+        axesMatrix.a21 = -sin;
+
+        //second column
+        axesMatrix.a12 = sin;
+        axesMatrix.a22 = cos;
+
+        //return result
+        return axesMatrix;
+    }
+
+    @Override
     public double distanceToCentroidX() {
-        return (positiveX + negativeX)/2f;
+        return distanceToCentroidX;
     }
 
     @Override
     public double distanceToCentroidY() {
-        return (positiveY + negativeY)/2f;
+        return distanceToCentroidY;
     }
 
     @Override
     public double distanceToCentroidZ() {
         return 0f;
+    }
+
+    @Override
+    public Vector3D distanceBetweenCenterandCentroid(Pose pose) {
+        return distanceBetweenCenterAndCentroid.rotate(pose.getYaw(), 0, 0);
     }
 }

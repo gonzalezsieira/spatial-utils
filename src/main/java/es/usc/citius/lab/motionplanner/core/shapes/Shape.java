@@ -24,6 +24,7 @@ import org.ejml.data.FixedMatrix3x3_64F;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Vector;
 
 /**
  *
@@ -64,6 +65,8 @@ public abstract class Shape implements Serializable {
      * @return 3x3 matrix with the axes
      */
     public abstract FixedMatrix3x3_64F axesMatrixAt(Pose pose);
+
+    public abstract Vector3D distanceBetweenCenterandCentroid(Pose pose);
 
     /**
      * @return distance from the centroid to the shape of the border (dimension X in local frame)
