@@ -280,15 +280,15 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
         //get rotation matrix
         FixedMatrix3x3_64F axesMatrix = new FixedMatrix3x3_64F();
         //pre-calculated values for effiency
-        float cos = (float) FastMath.cos(pose.getYaw());
-        float sin = (float) FastMath.sin(pose.getYaw());
+        double cos = FastMath.cos(pose.getYaw());
+        double sin = FastMath.sin(pose.getYaw());
 
         //first column
         axesMatrix.a11 = cos;
-        axesMatrix.a21 = -sin;
+        axesMatrix.a21 = sin;
 
         //second column
-        axesMatrix.a12 = sin;
+        axesMatrix.a12 = -sin;
         axesMatrix.a22 = cos;
 
         //return result
@@ -300,15 +300,15 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
         //get rotation matrix
         FixedMatrix2x2_64F axesMatrix = new FixedMatrix2x2_64F();
         //pre-calculated values for effiency
-        float cos = (float) FastMath.cos(pose.getYaw());
-        float sin = (float) FastMath.sin(pose.getYaw());
+        double cos = FastMath.cos(pose.getYaw());
+        double sin = FastMath.sin(pose.getYaw());
 
         //first column
         axesMatrix.a11 = cos;
-        axesMatrix.a21 = -sin;
+        axesMatrix.a21 = sin;
 
         //second column
-        axesMatrix.a12 = sin;
+        axesMatrix.a12 = -sin;
         axesMatrix.a22 = cos;
 
         //return result
