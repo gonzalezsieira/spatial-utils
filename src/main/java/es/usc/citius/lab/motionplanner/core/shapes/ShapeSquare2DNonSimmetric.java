@@ -67,6 +67,7 @@ public class ShapeSquare2DNonSimmetric extends Shape2D{
         this.negativeY = negativeY;
         this.positiveX = positiveX;
         this.positiveY = positiveY;
+        this.initialize();
     }
 
     /**
